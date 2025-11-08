@@ -16,7 +16,7 @@ wedding-site/
 
 ## Setup
 
-See [INSTRUCTIONS.md](../ansel/INSTRUCTIONS.md) for detailed setup guide.
+See [copilot-instructions.md] for detailed setup guide.
 
 ## Quick Start
 
@@ -36,9 +36,8 @@ npm run dev
 
 ## Documentation
 
-- **PLAN.md** - Complete implementation plan (in ../ansel/)
-- **INSTRUCTIONS.md** - Developer guide (in ../ansel/)
-- **SUMMARY.md** - Project overview (in ../ansel/)
+- **PLAN.md** - Complete implementation plan
+- **copilot-instructions.md** - Developer IA guide
 
 ## Tech Stack
 
