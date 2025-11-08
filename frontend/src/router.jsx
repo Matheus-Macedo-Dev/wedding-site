@@ -4,6 +4,7 @@ import Home from '@/pages/Home/Home';
 import Gifts from '@/pages/Gifts/Gifts';
 import Gallery from '@/pages/Gallery/Gallery';
 import OurStory from '@/pages/OurStory/OurStory';
+import Information from '@/pages/Information/Information';
 import PaymentSuccess from '@/pages/PaymentSuccess';
 import PaymentError from '@/pages/PaymentError';
 import PaymentPending from '@/pages/PaymentPending';
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: 'presentes', element: <Gifts /> },
       { path: 'album', element: <Gallery /> },
       { path: 'historia', element: <OurStory /> },
+      { path: 'informacoes', element: <Information /> },
       { path: 'obrigado', element: <PaymentSuccess /> },
       { path: 'erro', element: <PaymentError /> },
       { path: 'pendente', element: <PaymentPending /> }

@@ -21,7 +21,7 @@ function TimelineCard({ event, index }) {
       } flex-col`}
     >
       {/* Card */}
-      <div className="w-full md:w-5/12">
+      <div className="w-full md:w-5/12 relative z-10">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
           <div className="aspect-[9/16] overflow-hidden">
             <img
@@ -45,7 +45,7 @@ function TimelineCard({ event, index }) {
       </div>
 
       {/* Timeline Dot */}
-      <div className="flex items-center justify-center w-full md:w-2/12 my-4 md:my-0">
+      <div className="flex items-center justify-center w-full md:w-2/12 my-4 md:my-0 relative z-10">
         <div className="relative">
           <div className="w-4 h-4 bg-secondary rounded-full border-4 border-white shadow-lg" />
         </div>
@@ -60,8 +60,13 @@ function TimelineCard({ event, index }) {
 export default function Timeline() {
   return (
     <section className="relative py-16 md:py-24 bg-white z-10">
-      {/* Gradient fade from transparent to white background */}
-      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-white pointer-events-none -mt-32" />
+      {/* Torn paper / wrapped page effect - fade from photo background to white */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-32 md:h-48 pointer-events-none -mt-32 md:-mt-48 z-0"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.7) 60%, rgb(255,255,255) 100%)'
+        }}
+      />
       
       <div className="container-custom relative z-10">
         <motion.div
@@ -81,8 +86,8 @@ export default function Timeline() {
 
         {/* Timeline Events */}
         <div className="relative">
-          {/* Vertical Line (desktop only) */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-secondary-dark transform -translate-x-1/2" />
+          {/* Vertical Line (all screen sizes, behind cards) */}
+          <div className="absolute left-1/2 md:left-1/2 top-0 bottom-0 w-0.5 bg-secondary-dark transform -translate-x-1/2 -z-10" />
           
           {TIMELINE_EVENTS.map((event, index) => (
             <TimelineCard key={event.id} event={event} index={index} />

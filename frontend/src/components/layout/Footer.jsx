@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { HeartIcon } from '@heroicons/react/24/solid';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -55,8 +54,8 @@ export default function Footer() {
             <p>
               © {currentYear} Alana & Matheus. Todos os direitos reservados.
             </p>
-            <p className="flex items-center">
-              Desenvolvido com <HeartIcon className="w-4 h-4 mx-1 text-accent" /> por Matheus Macedo e Alana Alves
+            <p>
+              Desenvolvido por Matheus Macedo e Alana Alves
             </p>
           </div>
         </div>

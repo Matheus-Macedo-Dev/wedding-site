@@ -42,6 +42,7 @@ export const NAV_ITEMS = [
     path: 'https://alanamatheus.online',
     external: true 
   },
+  { id: 'informacoes', name: 'Informações', path: '/informacoes' },
   { id: 'presentes', name: 'Presentes', path: '/presentes' },
   { id: 'album', name: 'Álbum de Fotos', path: '/album' },
   { id: 'historia', name: 'Nossa História', path: '/historia' }

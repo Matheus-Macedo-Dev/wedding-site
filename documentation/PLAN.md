@@ -55,7 +55,8 @@ wedding-site/
 │   │   │   ├── Home/
 │   │   │   ├── Gifts/
 │   │   │   ├── Gallery/
-│   │   │   └── OurStory/
+│   │   │   ├── OurStory/
+│   │   │   └── Information/
 │   │   ├── hooks/              # useCountdown, useGifts
 │   │   ├── services/           # api.js
 │   │   ├── store/              # Zustand store
@@ -161,7 +162,7 @@ Implementation notes:
 ```jsx
 Features:
 - **Background**: Transparent (bg-transparent) - floats on hero fixed background
-- Calculate time until June 4th, 2026 (18:00 BRT)
+- Calculate time until June 4th, 2026 (16:00 BRT)
 - Before wedding: Display Days | Hours | Minutes | Seconds (4-column grid, 2 cols on mobile)
 - After wedding: Display "Casados há X meses Y dias" (2-column grid)
 - **Number styling**: White text with heavy drop-shadow (drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)])
@@ -178,7 +179,7 @@ Features:
 **Implementation**:
 ```javascript
 // useCountdown.js hook
-const targetDate = new Date('2026-06-04T18:00:00-03:00');
+const targetDate = new Date('2026-06-04T16:00:00-03:00');
 const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
 function calculateTimeLeft() {
@@ -302,6 +303,7 @@ export const NAV_ITEMS = [
     path: 'https://alanamatheus.online', // ✅ External URL
     external: true 
   },
+  { id: 'informacoes', label: 'Informações', path: '/informacoes' },
   { id: 'presentes', label: 'Presentes', path: '/presentes' },
   { id: 'album', label: 'Álbum de Fotos', path: '/album' },
   { id: 'historia', label: 'Nossa História', path: '/historia' }
@@ -571,9 +573,9 @@ Features:
 
 ---
 
-## Phase 7: Our Story Page - "Nossa História" (Day 16-17)
+## Phase 7: Our Story & Information Pages - "Nossa História" & "Informações" (Day 16-17)
 
-### 7.1 Detailed Story Timeline
+### 7.1 Our Story Page - Detailed Story Timeline
 ```jsx
 Content Sections:
 
@@ -581,30 +583,50 @@ Content Sections:
    - Large photo (full-width or 50/50 split with text)
    - Story paragraph (200-300 words)
    - Location: "São Paulo, SP"
-   - Emoji: 💕
 
 2. O Pedido (Jan 1, 2025)
    - Proposal photo
    - Proposal story (200-300 words)
-   - Location: "Praia de [Nome], [Estado]"
-   - Emoji: 💍
+   - Location: "Praia de Copacabana, Rio de Janeiro"
 
-3. O Grande Dia (Jun 4, 2026)
-   - Venue photo
-   - Event details:
-     ├── Data: 04 de Junho de 2026
-     ├── Horário: 18:00
-     ├── Local: [Venue Name & Address]
-     ├── Dress Code: Traje Esporte Fino
-     └── Mapa (Google Maps embed or link)
-   - Emoji: 🎉
+3. Final Inspirational Message
+   - Centered quote about celebrating love
+   - No event details (moved to Information page)
 
 Design:
 - Alternating image-left / image-right layout
 - Scroll-triggered animations (fade + slide)
 - Divider between sections (decorative line or icon)
 - Background: subtle texture or pattern
+- Focus: Pure love story narrative
 ```
+
+### 7.2 Information Page - Event Details & Logistics
+```jsx
+Content Sections:
+
+Event Details Card:
+├── Date: Quarta-feira, 04 de Junho de 2026
+├── Time: Cerimônia às 16:00
+├── Location: Lounge Conceito, Praia de Iparana - Caucaia/CE
+└── Dress Code: Traje Esporte Fino
+
+Venue Section:
+├── Venue image (right column)
+└── Google Maps embed (full width below)
+
+Design:
+- Two-column layout: Details left, image right
+- Icon-based detail cards (CalendarIcon, ClockIcon, MapPinIcon, SparklesIcon)
+- Google Maps iframe for venue location
+- Responsive: stacked on mobile
+- Purpose: All practical event information in one place
+```
+
+Navigation Updates:
+- New menu item: "Informações" (positioned after RSVP)
+- Route: /informacoes
+- Separation improves information architecture
 
 ---
 
@@ -1125,12 +1147,16 @@ TTL: 3600
 - [x] Custom .font-couple-names class
 - [x] RSVP external link integration
 - [x] Responsive design (mobile/tablet/desktop)
+- [x] Information page with event details
+- [x] Our Story page focusing on love narrative
+- [x] Separation of concerns (story vs. logistics)
 
 #### Pages Created
 - [x] Home (Hero + Countdown + Timeline)
 - [x] Gifts page structure
 - [x] Gallery page structure
-- [x] Our Story page structure
+- [x] Our Story page (complete - love story narrative)
+- [x] Information page (complete - event details & logistics)
 - [x] Payment success/error/pending pages
 
 #### Backend
@@ -1152,7 +1178,6 @@ TTL: 3600
 
 #### Features
 - [ ] Complete Gallery page implementation
-- [ ] Complete Our Story page implementation
 - [ ] Complete Gifts page functionality
 - [ ] Test Mercado Pago integration
 - [ ] Add image lazy loading throughout

@@ -84,21 +84,21 @@ export default function StorySection({
             </h2>
             
             {date && (
-              <p className="text-lg text-accent font-medium mb-2">
+              <p className="text-lg text-secondary-dark font-medium mb-2">
                 {date}
               </p>
             )}
             
             {location && (
-              <p className="text-text-muted mb-6">
-                📍 {location}
+              <p className="text-primary-light mb-6">
+                {location}
               </p>
             )}
 
             {/* Story */}
             {story && (
               <div className="prose prose-lg max-w-none">
-                <p className="text-text-light leading-relaxed whitespace-pre-line">
+                <p className="text-primary leading-relaxed whitespace-pre-line">
                   {story}
                 </p>
               </div>

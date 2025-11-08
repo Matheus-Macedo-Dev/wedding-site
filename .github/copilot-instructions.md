@@ -2,7 +2,7 @@
 
 ## Project Overview
 **Project**: Wedding website for Alana & Matheus  
-**Wedding Date**: June 4, 2026 at 18:00  
+**Wedding Date**: June 4, 2026 at 16:00  
 **Main Domain**: alanamatheus.shop (React - to be deployed)  
 **RSVP Domain**: alanamatheus.online (Vue 3 - ✅ deployed separately)  
 **Repository**: c:\Users\Matheus\wedding-site\
@@ -27,9 +27,8 @@
 ### 🚧 Required Actions
 1. Add image files (logos, hero slides, timeline photos)
 2. Complete Gallery page implementation
-3. Complete Our Story page implementation
-4. Populate gift list in database.json
-5. Test and deploy
+3. Populate gift list in database.json
+4. Test and deploy
 
 ---
 
@@ -184,6 +183,39 @@
 - Copyright: © {year} Alana & Matheus
 - Credit: "Desenvolvido com ❤️ por Matheus Macedo e Alana Alves"
 
+### Information Page (✅ Completed)
+**Location**: `frontend/src/pages/Information/Information.jsx`
+
+**Key Features**:
+- Dedicated page for all event details and logistics
+- Hero section with page title and description
+- Two-column layout: Event details on left, venue image on right
+- Event details card with icons (CalendarIcon, ClockIcon, MapPinIcon, SparklesIcon)
+- Information displayed:
+  - Date: Quarta-feira, 04 de Junho de 2026
+  - Time: Cerimônia às 16:00
+  - Location: Lounge Conceito, Praia de Iparana - Caucaia/CE
+  - Dress Code: Traje Esporte Fino
+- Venue image with hover scale effect
+- Google Maps embed showing venue location
+- Responsive design: stacked on mobile, side-by-side on desktop
+- Framer Motion animations for scroll effects
+- Separated from Our Story page for better information architecture
+
+### Our Story Page (✅ Completed)
+**Location**: `frontend/src/pages/OurStory/OurStory.jsx`
+
+**Key Features**:
+- Focuses purely on love story (no event logistics)
+- Hero section with page title
+- Two main story sections: "Como Nos Conhecemos" and "O Pedido"
+- Uses StorySection component for each story with alternating layouts
+- Elegant dividers between sections (gradient line)
+- Final inspirational message at the end
+- No event details (moved to Information page)
+- No Google Maps embed (moved to Information page)
+- Clean narrative flow focusing on relationship timeline
+
 ---
 
 ## File Structure
@@ -220,7 +252,8 @@ wedding-site/
 │   │   │   ├── Home/
 │   │   │   ├── Gifts/
 │   │   │   ├── Gallery/
-│   │   │   └── OurStory/
+│   │   │   ├── OurStory/
+│   │   │   └── Information/
 │   │   ├── hooks/                 # useCountdown
 │   │   ├── services/              # api.js
 │   │   ├── store/
@@ -385,6 +418,7 @@ export const NAV_ITEMS = [
     path: 'https://alanamatheus.online',
     external: true 
   },
+  { id: 'informacoes', name: 'Informações', path: '/informacoes' },
   { id: 'presentes', name: 'Presentes', path: '/presentes' },
   { id: 'album', name: 'Álbum de Fotos', path: '/album' },
   { id: 'historia', name: 'Nossa História', path: '/historia' }
@@ -632,8 +666,8 @@ npm run deploy       # Deploy to GitHub Pages (after setup)
 ---
 
 **Last Updated**: November 8, 2025  
-**Current Phase**: Core components completed, ready for content and remaining pages  
-**Next Steps**: Add images, complete Gallery/OurStory pages, populate gift list, deploy
+**Current Phase**: Core components completed, Information and Our Story pages implemented  
+**Next Steps**: Add images, complete Gallery page, populate gift list, deploy
 
 ---
 
