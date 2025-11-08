@@ -24,6 +24,9 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    env:
+      # Provide VITE_API_URL via repository Secret (or set as a repo Variable if preferred)
+      VITE_API_URL: ${{ secrets.VITE_API_URL }}
     defaults:
       run:
         working-directory: ./frontend
