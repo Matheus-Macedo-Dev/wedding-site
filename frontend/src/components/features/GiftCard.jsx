@@ -83,7 +83,7 @@ export default function GiftCard({ gift, onPurchase, loading }) {
             disabled={!gift.isAvailable || isProcessing || loading}
             onClick={handlePurchase}
           >
-            {isProcessing ? 'Processando...' : 'Presentear 🎁'}
+            {isProcessing ? 'Processando...' : 'Presentear'}
           </Button>
         </div>
       </Card>

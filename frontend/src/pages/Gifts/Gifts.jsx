@@ -52,7 +52,7 @@ export default function Gifts() {
             Lista de Presentes
           </h1>
           <p className="text-lg text-text-muted max-w-2xl mx-auto">
-            Escolha um presente especial para nos ajudar a começar nossa nova vida juntos! 🎁
+            Escolha um presente especial para nos ajudar a começar nossa nova vida juntos!
           </p>
         </motion.div>
 
