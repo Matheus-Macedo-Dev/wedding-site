@@ -1,0 +1,38 @@
+{
+  "gifts": [
+    {
+      "id": 1,
+      "name": "Jogo de Panelas Antiaderente",
+      "description": "Conjunto completo com 5 panelas de alta qualidade",
+      "price": 350.00,
+      "image": "/images/gifts/panelas.webp",
+      "quantity": 1,
+      "purchased": 0,
+      "preferenceId": null,
+      "category": "Cozinha"
+    },
+    {
+      "id": 2,
+      "name": "Micro-ondas 30L",
+      "description": "Micro-ondas branco 30L com painel digital",
+      "price": 500.00,
+      "image": "/images/gifts/microondas.webp",
+      "quantity": 1,
+      "purchased": 0,
+      "preferenceId": null,
+      "category": "Eletrodomésticos"
+    },
+    {
+      "id": 3,
+      "name": "Jogo de Toalhas Premium",
+      "description": "Kit com 4 toalhas de banho 100% algodão egípcio",
+      "price": 150.00,
+      "image": "/images/gifts/toalhas.webp",
+      "quantity": 3,
+      "purchased": 0,
+      "preferenceId": null,
+      "category": "Banho"
+    }
+  ],
+  "purchases": []
+}
