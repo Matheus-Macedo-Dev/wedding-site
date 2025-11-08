@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:wght@300;400;500;600&display=swap');
-@import url('https://fonts.cdnfonts.com/css/rameau');
 
 @theme {
   --color-primary: #3A3A3A;
@@ -19,7 +18,7 @@
   
   --font-family-sans: 'Montserrat', sans-serif;
   --font-family-serif: 'Playfair Display', serif;
-  --font-family-rameau: 'Rameau Light', 'Rameau', 'Playfair Display', serif;
+  --font-family-rameau: 'Playfair Display', serif;
 }
 
 @layer base {
@@ -54,7 +53,7 @@
   
   /* Font for couple names */
   .font-couple-names {
-    font-family: 'Rameau Light', 'Rameau', 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif;
     font-weight: normal;
     letter-spacing: 0.2em;
   }
