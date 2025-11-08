@@ -22,6 +22,8 @@ const router = createBrowserRouter([
       { path: 'pendente', element: <PaymentPending /> }
     ]
   }
-]);
+], {
+  basename: '/wedding-site'
+});
 
 export default router;
