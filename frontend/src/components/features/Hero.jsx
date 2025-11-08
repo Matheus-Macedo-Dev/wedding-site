@@ -7,14 +7,14 @@ export default function Hero() {
   
   // Placeholder images - will be replaced with actual photos
   const slides = [
-    '/images/hero/slide1.jpg',
-    '/images/hero/slide2.jpg',
-    '/images/hero/slide3.jpg',
-    '/images/hero/slide4.jpg',
-    '/images/hero/slide5.jpg',
-    '/images/hero/slide6.jpg',
-    '/images/hero/slide7.jpg',
-    '/images/hero/slide8.jpg'
+    `${import.meta.env.BASE_URL}images/hero/slide1.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide2.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide3.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide4.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide5.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide6.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide7.jpg`,
+    `${import.meta.env.BASE_URL}images/hero/slide8.jpg`
   ];
 
   // Auto-advance slideshow every 5 seconds

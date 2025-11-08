@@ -51,28 +51,11 @@ export default function Header() {
               className="flex items-center"
             >
               <img 
-                src={useBlackLogo ? "/images/logo-black.png" : "/images/logo.png"}
+                src={useBlackLogo ? `${import.meta.env.BASE_URL}images/logo-black.png` : `${import.meta.env.BASE_URL}images/logo.png`}
                 alt="Alana & Matheus" 
                 className={`h-16 md:h-14 w-auto transition-all duration-300 ${
                   useBlackLogo ? 'opacity-100' : 'drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
                 }`}
-                onError={(e) => {
-                  console.error('Logo failed to load from:', e.target.src);
-                  // Try alternative extensions
-                  if (e.target.src.includes('logo-black')) {
-                    if (e.target.src.endsWith('.png')) {
-                      e.target.src = '/images/logo-black.jpg';
-                    } else if (e.target.src.endsWith('.jpg')) {
-                      e.target.src = '/images/logo-black.jpeg';
-                    }
-                  } else {
-                    if (e.target.src.endsWith('.png')) {
-                      e.target.src = '/images/logo.jpg';
-                    } else if (e.target.src.endsWith('.jpg')) {
-                      e.target.src = '/images/logo.jpeg';
-                    }
-                  }
-                }}
               />
             </Link>
 
