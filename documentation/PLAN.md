@@ -139,15 +139,15 @@ Features:
 - Fade transition every 5 seconds
 - **Fixed background**: height h-screen, position fixed, extends to countdown
 - **Radial vignette overlay**: rgba(0,0,0,0.1) center → rgba(0,0,0,0.6) edges
-- Centered text: "ALANA & MATHEUS" (Rameau font, weight 100)
-- **Text styling**: Ultra thin, large responsive sizing (text-4xl → text-7xl)
+- Centered text: "ALANA & MATHEUS" (Rameau font with 0.2em letter spacing)
+- **Text styling**: Responsive sizing (text-4xl → text-7xl)
 - **& symbol**: Italicized between names (font-sans italic)
 - **Divider line**: White horizontal line (w-16 h-px) between names and date
 - Wedding date: "04 de Junho de 2026" (below divider)
 - **Date placement**: Positioned near couple names (not separate section)
 - No scroll indicator
 - No slide indicator dots (clean design)
-- **Image positioning**: object-center on mobile, object-bottom on desktop
+- **Image positioning**: object-center on all screen sizes
 - **Content positioning**: pt-20 (below header), -mt-48 md:-mt-32 (centered vertically)
 
 Implementation notes:
@@ -635,13 +635,13 @@ Design:
   
   --font-family-sans: 'Montserrat', sans-serif;
   --font-family-serif: 'Playfair Display', serif;
-  --font-family-rameau: 'Rameau', serif;  // Added for couple names
+  --font-family-rameau: 'Rameau Light', 'Rameau', serif;  // Added for couple names
 }
 
 // Font weights used:
 // Montserrat: 200, 300, 400, 500, 600 (thinner weights)
 // Playfair Display: 300, 400, 500, 600
-// Rameau: 100 (for couple names only)
+// Rameau: normal (default weight, with 0.2em letter spacing)
 ```
 
 ### 8.2 Typography Scale
@@ -655,7 +655,8 @@ p:  1rem (16px) / 1.125rem (18px) desktop - sans (weight 200-400)
 
 Couple Names (Hero): 
 - Font: Rameau (custom serif)
-- Weight: 100 (ultra thin)
+- Weight: normal
+- Letter spacing: 0.2em
 - Size: 4xl (2.25rem) mobile, 6xl (3.75rem) tablet, 7xl (4.5rem) desktop
 - Class: .font-couple-names
 
@@ -664,7 +665,7 @@ Mobile: scale down by 0.75x
 Font weights in use:
 - Montserrat: 200 (extralight), 300 (light), 400 (normal), 500 (medium), 600 (semibold)
 - Playfair Display: 300 (light), 400 (normal), 500 (medium), 600 (semibold)
-- Rameau: 100 (thin) - couple names only
+- Rameau: normal (with 0.2em letter spacing) - couple names only
 ```
 
 ### 8.3 Animation Variants (Framer Motion)
@@ -1114,7 +1115,7 @@ TTL: 3600
 - [x] Mobile menu (z-[60], slide-in animation, proper hamburger behavior)
 - [x] Hero section with fixed background and 8-photo slideshow
 - [x] Radial vignette overlay on hero
-- [x] Couple names with Rameau font (weight 100)
+- [x] Couple names with Rameau font and 0.2em letter spacing
 - [x] Countdown timer with transparent background
 - [x] Timeline with portrait (9:16) cards
 - [x] Timeline with white background and gradient fade

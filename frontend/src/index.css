@@ -19,7 +19,7 @@
   
   --font-family-sans: 'Montserrat', sans-serif;
   --font-family-serif: 'Playfair Display', serif;
-  --font-family-rameau: 'Rameau', serif;
+  --font-family-rameau: 'Rameau Light', serif;
 }
 
 @layer base {
@@ -54,8 +54,9 @@
   
   /* Font for couple names */
   .font-couple-names {
-    font-family: 'Rameau', serif;
-    font-weight: 100;
+    font-family: 'Rameau Light', 'Rameau', serif;
+    font-weight: normal;
+    letter-spacing: 0.2em;
   }
   
   @media (min-width: 640px) {

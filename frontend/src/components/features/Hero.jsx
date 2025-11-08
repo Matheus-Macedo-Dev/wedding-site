@@ -47,7 +47,7 @@ export default function Hero() {
             <img
               src={slide}
               alt={`Alana & Matheus - Photo ${index + 1}`}
-              className="w-full h-full object-cover object-center md:object-bottom"
+              className="w-full h-full object-cover object-center"
               loading={index === 0 ? 'eager' : 'lazy'}
             />
           </div>
@@ -61,7 +61,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4 text-white pt-20 z-10">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight mb-4 animate-fade-in -mt-48 md:-mt-32 font-couple-names" style={{ fontWeight: 100 }}>
+        <h1 className="font-couple-names text-4xl md:text-6xl lg:text-7xl mb-4 animate-fade-in -mt-48 md:-mt-32">
           <span className="block md:inline">ALANA</span>
           <span className="block md:inline font-sans italic font-extralight text-white mx-2 my-2 md:my-0">&</span>
           <span className="block md:inline">MATHEUS</span>

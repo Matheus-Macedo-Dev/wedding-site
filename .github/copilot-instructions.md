@@ -21,8 +21,8 @@
 - RSVP external link configured
 - Fixed background hero with radial vignette overlay
 - Portrait timeline cards (9:16 aspect ratio)
-- Thinner font weights (200/300/400 for Montserrat/Playfair, 100 for Rameau)
-- Rameau font for couple names (weight 100)
+- Thinner font weights (200/300/400 for Montserrat/Playfair)
+- Rameau font for couple names with 0.2em letter spacing
 
 ### 🚧 Required Actions
 1. Add image files (logos, hero slides, timeline photos)
@@ -89,14 +89,15 @@
 ### Typography
 - **Headings**: Playfair Display (weights: 300, 400, 500, 600)
 - **Body**: Montserrat (weights: 200, 300, 400, 500, 600)
-- **Couple Names**: Rameau (weight: 100 only)
+- **Couple Names**: Rameau (custom serif font)
 - **Rule**: All headings on home page are UPPERCASE
 
 ### Font Classes
 ```css
 .font-couple-names {
-  font-family: 'Rameau', serif;
-  font-weight: 100;
+  font-family: 'Rameau Light', 'Rameau', serif;
+  font-weight: normal;
+  letter-spacing: 0.2em;
 }
 ```
 
@@ -130,11 +131,11 @@
 - Fixed background: `position: fixed`, `h-screen`, extends to countdown
 - 8-photo slideshow with fade transitions (5-second intervals)
 - Radial vignette overlay: `rgba(0,0,0,0.1)` center → `rgba(0,0,0,0.6)` edges
-- Couple names: Rameau font, weight 100, responsive sizing (text-4xl → text-7xl)
+- Couple names: Rameau font, 0.2em letter spacing, responsive sizing (text-4xl → text-7xl)
 - Names separated by italicized `&` symbol (font-sans italic)
 - White divider line (w-16 h-px) between names and date
 - Wedding date below divider: "04 de Junho de 2026"
-- Image positioning: `object-center` mobile, `object-bottom` desktop
+- Image positioning: `object-center` on all screen sizes
 - Content positioned with pt-20 and -mt-48 md:-mt-32 for vertical centering
 - No scroll indicator, no slide dots
 
@@ -498,7 +499,7 @@ npm run deploy       # Deploy to GitHub Pages (after setup)
 
 ### Typography Rules
 1. **All headings on home page**: UPPERCASE
-2. **Couple names**: Always use `.font-couple-names` class (Rameau font, weight 100)
+2. **Couple names**: Always use `.font-couple-names` class (Rameau font with 0.2em letter spacing)
 3. **Section titles**: `text-3xl md:text-5xl font-serif font-light uppercase`
 4. **Card titles**: `text-xl font-serif font-normal uppercase`
 5. **Dates**: `text-sm font-light`
@@ -559,7 +560,7 @@ npm run deploy       # Deploy to GitHub Pages (after setup)
 
 ### Visual
 - [ ] Header transparent at top, white after scroll
-- [ ] Couple names display in Rameau font (weight 100)
+- [ ] Couple names display in Rameau font with 0.2em letter spacing
 - [ ] All headings are UPPERCASE on home page
 - [ ] Timeline cards in portrait orientation
 - [ ] Fixed background extends through countdown
