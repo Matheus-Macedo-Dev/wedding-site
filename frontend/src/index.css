@@ -58,6 +58,25 @@
     letter-spacing: 0.2em;
   }
   
+  /* Horizontal scroll styling for NavigationGallery */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
+  /* Smooth scroll behavior */
+  .snap-x {
+    scroll-snap-type: x mandatory;
+  }
+
+  .snap-center {
+    scroll-snap-align: center;
+  }
+  
   @media (min-width: 640px) {
     .container-custom {
       padding-left: 1.5rem;

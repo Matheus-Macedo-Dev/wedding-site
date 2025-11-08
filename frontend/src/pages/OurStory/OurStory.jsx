@@ -2,18 +2,14 @@ import { motion } from 'framer-motion';
 import StorySection from '@/components/features/StorySection';
 
 export default function OurStory() {
-  // Sample story data - replace with actual content
   const stories = [
     {
       id: 1,
       title: 'Como Nos Conhecemos',
       date: '06 de Junho, 2021',
-      location: 'São Paulo, SP',
+      location: 'Cratéus, CE',
       story: `Foi um dia comum que se transformou em extraordinário. O destino nos uniu de uma forma inesquecível, e desde o primeiro momento, soubemos que havia algo especial entre nós.
-
-Nossos olhares se cruzaram e o tempo pareceu parar. Cada conversa, cada riso compartilhado, nos aproximava mais. Era como se nos conhecêssemos há uma eternidade, mesmo sendo o nosso primeiro encontro.
-
-Aquele foi o início de uma jornada maravilhosa que nos trouxe até aqui, e mal podemos esperar para continuar escrevendo nossa história juntos.`,
+                Nossos olhares se cruzaram e o tempo pareceu parar. Cada conversa, cada riso compartilhado, nos aproximava mais. Era como se nos conhecêssemos há uma eternidade, mesmo sendo o nosso primeiro encontro.`,
       image: `${import.meta.env.BASE_URL}images/timeline/meeting.jpg`,
       imageAlt: 'Como nos conhecemos',
       imageLeft: false
@@ -22,7 +18,7 @@ Aquele foi o início de uma jornada maravilhosa que nos trouxe até aqui, e mal 
       id: 2,
       title: 'O Pedido',
       date: '01 de Janeiro, 2025',
-      location: 'Praia de Copacabana, Rio de Janeiro',
+      location: 'Litoral Nordestino, Ceará',
       story: `O momento mais mágico de nossas vidas chegou em um dia perfeito à beira-mar. Com o pôr do sol pintando o céu de dourado e rosa, o cenário não poderia ser mais perfeito para este momento especial.
 
 Com o coração acelerado e as palavras cuidadosamente preparadas, o pedido foi feito. As lágrimas de alegria, o sim apaixonado, e o abraço que pareceu durar uma eternidade - cada segundo daquele momento ficará para sempre gravado em nossos corações.
