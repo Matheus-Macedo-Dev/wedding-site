@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 // or a short-term debug flag ALLOW_ALL_ORIGINS=true to accept any origin.
 const allowAll = String(process.env.ALLOW_ALL_ORIGINS).toLowerCase() === 'true';
 const defaultOrigins = [
-  process.env.FRONTEND_URL || 'http://alanamatheus.site',
+  process.env.FRONTEND_URL ||
   'https://alanamatheus.site',
   'http://localhost:5173',
   'http://localhost:5174'
