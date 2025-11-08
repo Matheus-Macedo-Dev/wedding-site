@@ -1,35 +1,15 @@
 import express from 'express';
 import axios from 'axios';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { db } from '../services/database.js';
 
 const router = express.Router();
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, '..', 'database.json');
 const MP_ACCESS_TOKEN = process.env.MERCADO_PAGO_ACCESS_TOKEN;
-
-// Helper: Read database
-async function readDB() {
-  const data = await fs.readFile(DB_PATH, 'utf8');
-  return JSON.parse(data);
-}
-
-// Helper: Write database
-async function writeDB(data) {
-  await fs.writeFile(DB_PATH, JSON.stringify(data, null, 2));
-}
 
 // GET all gifts with availability
 router.get('/', async (req, res) => {
   try {
-    const db = await readDB();
-    const availableGifts = db.gifts.map(gift => ({
-      ...gift,
-      available: gift.quantity - gift.purchased,
-      isAvailable: gift.purchased < gift.quantity
-    }));
-    res.json(availableGifts);
+    const gifts = await db.getGifts();
+    res.json(gifts);
   } catch (error) {
     console.error('Error fetching gifts:', error);
     res.status(500).json({ error: 'Failed to fetch gifts' });
@@ -40,18 +20,13 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const giftId = parseInt(req.params.id);
-    const db = await readDB();
-    const gift = db.gifts.find(g => g.id === giftId);
+    const gift = await db.getGift(giftId);
 
     if (!gift) {
       return res.status(404).json({ error: 'Gift not found' });
     }
 
-    res.json({
-      ...gift,
-      available: gift.quantity - gift.purchased,
-      isAvailable: gift.purchased < gift.quantity
-    });
+    res.json(gift);
   } catch (error) {
     console.error('Error fetching gift:', error);
     res.status(500).json({ error: 'Failed to fetch gift' });
@@ -62,8 +37,7 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/checkout', async (req, res) => {
   try {
     const giftId = parseInt(req.params.id);
-    const db = await readDB();
-    const gift = db.gifts.find(g => g.id === giftId);
+    const gift = await db.getGift(giftId);
 
     if (!gift) {
       return res.status(404).json({ error: 'Gift not found' });
@@ -73,6 +47,10 @@ router.post('/:id/checkout', async (req, res) => {
       return res.status(400).json({ error: 'Gift no longer available' });
     }
 
+    // Get frontend URL for redirects
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5174';
+    const isLocalhost = frontendUrl.includes('localhost');
+    
     // Create Mercado Pago preference
     const preference = {
       items: [
@@ -80,23 +58,24 @@ router.post('/:id/checkout', async (req, res) => {
           id: gift.id.toString(),
           title: gift.name,
           description: gift.description,
-          unit_price: gift.price,
+          unit_price: parseFloat(gift.price),
           quantity: 1,
           currency_id: "BRL"
         }
       ],
       back_urls: {
-        success: "https://alanamatheus.shop/obrigado.html",
-        failure: "https://alanamatheus.shop/erro.html",
-        pending: "https://alanamatheus.shop/pendente.html"
+        success: `${frontendUrl}/obrigado`,
+        failure: `${frontendUrl}/erro`,
+        pending: `${frontendUrl}/pendente`
       },
-      auto_return: "approved",
+      // Only use auto_return for production (Mercado Pago rejects localhost)
+      ...(isLocalhost ? {} : { auto_return: "approved" }),
       notification_url: `${process.env.BACKEND_URL}/api/webhook/mercadopago`,
       metadata: {
         gift_id: gift.id
       }
     };
-
+    
     const response = await axios.post(
       'https://api.mercadopago.com/checkout/preferences',
       preference,
@@ -108,9 +87,10 @@ router.post('/:id/checkout', async (req, res) => {
       }
     );
 
-    // Save preference ID
-    gift.preferenceId = response.data.id;
-    await writeDB(db);
+    console.log('  ✅ Preference created:', response.data.id);
+
+    // Save preference ID to database
+    await db.updateGiftPreference(gift.id, response.data.id);
 
     res.json({
       preferenceId: response.data.id,

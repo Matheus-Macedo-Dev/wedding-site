@@ -9,13 +9,18 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["wedding", "api", "mercadopago"],
+  "keywords": [
+    "wedding",
+    "api",
+    "mercadopago"
+  ],
   "author": "Matheus",
   "license": "ISC",
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.80.0",
     "axios": "^1.13.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

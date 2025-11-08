@@ -1,17 +1,25 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import giftsRouter from './routes/gifts.js';
 import webhookRouter from './routes/webhook.js';
 
-dotenv.config();
+// Get directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load .env file explicitly
+dotenv.config({ path: join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: ['https://alanamatheus.shop', 'http://localhost:5173', 'http://localhost:5174']
+   // Allow requests from the frontend (live site) and local dev servers
+   origin: [process.env.FRONTEND_URL || 'https://alanamatheus.site', 'http://localhost:5173', 'http://localhost:5174']
 }));
 app.use(express.json());
 
@@ -43,4 +51,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🎉 Wedding Registry API running on port ${PORT}`);
   console.log(`📍 Health check: http://localhost:${PORT}/api/health`);
+}).on('error', (err) => {
+  console.error('❌ Server failed to start:', err);
+  process.exit(1);
 });

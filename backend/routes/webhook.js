@@ -1,24 +1,9 @@
 import express from 'express';
 import axios from 'axios';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { db } from '../services/database.js';
 
 const router = express.Router();
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, '..', 'database.json');
 const MP_ACCESS_TOKEN = process.env.MERCADO_PAGO_ACCESS_TOKEN;
-
-// Helper: Read database
-async function readDB() {
-  const data = await fs.readFile(DB_PATH, 'utf8');
-  return JSON.parse(data);
-}
-
-// Helper: Write database
-async function writeDB(data) {
-  await fs.writeFile(DB_PATH, JSON.stringify(data, null, 2));
-}
 
 // Mercado Pago Webhook
 router.post('/mercadopago', async (req, res) => {
@@ -47,16 +32,14 @@ router.post('/mercadopago', async (req, res) => {
       // Only process approved payments
       if (payment.status === 'approved') {
         const giftId = parseInt(payment.metadata.gift_id);
-        const db = await readDB();
-        
-        const gift = db.gifts.find(g => g.id === giftId);
+        const gift = await db.getGift(giftId);
         
         if (gift && gift.purchased < gift.quantity) {
-          // Increment purchased count
-          gift.purchased += 1;
+          // Increment purchased count atomically
+          await db.incrementPurchased(giftId);
 
           // Record purchase
-          db.purchases.push({
+          await db.createPurchase({
             giftId: giftId,
             giftName: gift.name,
             paymentId: paymentId.toString(),
@@ -65,12 +48,10 @@ router.post('/mercadopago', async (req, res) => {
             buyerName: payment.payer.first_name ? 
               `${payment.payer.first_name} ${payment.payer.last_name || ''}`.trim() : 
               'Guest',
-            date: new Date().toISOString(),
             status: payment.status
           });
 
-          await writeDB(db);
-          console.log(`✅ Gift "${gift.name}" purchased! (${gift.purchased}/${gift.quantity})`);
+          console.log(`✅ Gift "${gift.name}" purchased! (${gift.purchased + 1}/${gift.quantity})`);
         } else if (gift) {
           console.log(`⚠️ Gift "${gift.name}" already at max quantity`);
         } else {
