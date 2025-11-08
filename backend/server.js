@@ -16,11 +16,38 @@ dotenv.config({ path: join(__dirname, '.env') });
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors({
-   // Allow requests from the frontend (live site) and local dev servers
-   origin: [process.env.FRONTEND_URL || 'https://alanamatheus.site', 'http://localhost:5173', 'http://localhost:5174']
-}));
+// Middleware - CORS
+// Support configurable allowed origins via ALLOWED_ORIGINS (comma-separated)
+// or a short-term debug flag ALLOW_ALL_ORIGINS=true to accept any origin.
+const allowAll = String(process.env.ALLOW_ALL_ORIGINS).toLowerCase() === 'true';
+const defaultOrigins = [
+  process.env.FRONTEND_URL || 'https://alanamatheus.site',
+  'http://localhost:5173',
+  'http://localhost:5174'
+];
+const additional = (process.env.ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
+const allowedOrigins = Array.from(new Set([...defaultOrigins, ...additional]));
+
+if (allowAll) {
+  console.warn('ALLOW_ALL_ORIGINS is enabled — CORS allows any origin. Disable in production.');
+  app.use(cors({ origin: true }));
+} else {
+  app.use(cors({
+    origin: function(origin, callback) {
+      // Allow non-browser requests (e.g., server-to-server) when origin is undefined
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      // Allow subpaths of GitHub Pages (endsWith .github.io) if present in allowedOrigins by wildcard
+      const githubAllowed = allowedOrigins.some(a => a.includes('.github.io'));
+      if (githubAllowed && origin.endsWith('.github.io')) return callback(null, true);
+      console.warn(`Blocked CORS origin: ${origin}`);
+      return callback(new Error('Not allowed by CORS'));
+    }
+  }));
+}
 app.use(express.json());
 
 // Routes
