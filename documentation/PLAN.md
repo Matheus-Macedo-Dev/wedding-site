@@ -1,12 +1,14 @@
 # Wedding Website - Implementation Plan
 
 ## Project Overview
-Full-stack wedding website for Alana & Matheus with gift registry integration via Mercado Pago.
+Full-stack wedding website for Alana & Matheus with horizontal scroll navigation gallery and gift registry integration.
 
-**Wedding Date**: June 4th, 2026  
-**Domain**: alanamatheus.shop  
+**Wedding Date**: June 4th, 2026 at 16:00  
+**Domain**: alanamatheus.site (Custom domain configured ✅)  
 **RSVP Domain**: alanamatheus.online (Vue 3 - Already deployed ✅)  
-**Stack**: React + Node.js + Mercado Pago
+**Stack**: React 18.2 + Vite 7 + Tailwind CSS 4 + Node.js + Mercado Pago
+
+**Current Phase**: Implementing horizontal scroll navigation gallery with image cards and overlay buttons
 
 **RSVP Integration**: External Vue 3 app  
 **RSVP Repository**: https://github.com/Matheus-Macedo-Dev/rsvp-site  
