@@ -53,12 +53,14 @@ export default function Countdown() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-serif font-light text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] mb-4 uppercase">
-            {isMarried ? 'Casados Há' : 'Contagem Regressiva'}
+            {isMarried ? 'Casados Há' : ''}
           </h2>
           <p className="text-lg text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            {isMarried
-              ? 'Celebrando nosso amor a cada dia!'
-              : 'Falta pouco para o grande dia!'}
+            {isMarried ? (
+              'Celebrando nosso amor a cada dia!'
+            ) : (
+              <span className="monsieur-la-doulaise-regular text-4xl md:text-4xl leading-tight">Falta pouco para o grande dia!</span>
+            )}
           </p>
         </motion.div>
 

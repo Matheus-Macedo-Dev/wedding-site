@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap');
 
 @theme {
   --color-primary: #3A3A3A;
@@ -56,6 +57,13 @@
     font-family: 'Playfair Display', serif;
     font-weight: normal;
     letter-spacing: 0.2em;
+  }
+
+  /* Monsieur La Doulaise - decorative script for headings or special text */
+  .monsieur-la-doulaise-regular {
+    font-family: 'Monsieur La Doulaise', cursive;
+    font-weight: 400;
+    font-style: normal;
   }
   
   /* Horizontal scroll styling for NavigationGallery */
