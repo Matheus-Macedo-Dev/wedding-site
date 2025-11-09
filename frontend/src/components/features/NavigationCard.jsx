@@ -35,12 +35,12 @@ export function NavigationCard({
         <h3 className="text-2xl md:text-3xl font-serif font-normal uppercase text-white mb-3">
           {title}
         </h3>
-        <p className="text-sm md:text-base text-white/90 mb-6 line-clamp-2">
+        <p className="font-couple-names text-sm md:text-base text-white/90 mb-6 line-clamp-2">
           {description}
         </p>
         
         {/* Button */}
-        <button className="self-start px-8 py-3 bg-transparent border-2 border-white text-accent font-sans font-medium text-sm tracking-wider rounded-full hover:bg-accent hover:text-white transition-colors duration-300">
+        <button className="self-start px-8 py-3 bg-transparent border-2 border-white text-accent font-couple-names font-medium text-sm tracking-wider rounded-full hover:bg-accent hover:text-white transition-colors duration-300">
           {external ? 'Acessar' : 'Ver Mais'}
         </button>
       </div>

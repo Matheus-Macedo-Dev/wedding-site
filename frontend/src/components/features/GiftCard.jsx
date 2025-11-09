@@ -51,7 +51,7 @@ export default function GiftCard({ gift, onPurchase, loading }) {
           )}
 
           {/* Name */}
-          <h3 className="text-lg font-serif font-bold text-text-dark mb-2">
+          <h3 className="text-lg font-couple-names text-text-dark mb-2">
             {gift.name}
           </h3>
 

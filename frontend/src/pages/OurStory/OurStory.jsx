@@ -5,29 +5,38 @@ export default function OurStory() {
   const stories = [
     {
       id: 1,
-      title: 'Como Nos Conhecemos',
+      title: 'Nossa História',
       date: '06 de Junho, 2021',
       location: 'Cratéus, CE',
-      story: `Foi um dia comum que se transformou em extraordinário. O destino nos uniu de uma forma inesquecível, e desde o primeiro momento, soubemos que havia algo especial entre nós.
-                Nossos olhares se cruzaram e o tempo pareceu parar. Cada conversa, cada riso compartilhado, nos aproximava mais. Era como se nos conhecêssemos há uma eternidade, mesmo sendo o nosso primeiro encontro.`,
+      story: `Nossa História
+
+Dizem que certas almas nascem ligadas por um fio vermelho invisível,
+amarrado ao dedo mindinho.
+
+Um laço que o tempo pode esticar, enrolar, adiar...
+mas jamais romper.
+
+Talvez por isso, mesmo antes de nos conhecermos,
+nossas famílias já se cruzavam
+como se o destino, paciente, estivesse costurando aos poucos o nosso encontro.
+
+Crescemos próximos,
+caminhando por estradas que quase se tocavam,
+sem imaginar que havia um fio discreto nos guiando um ao encontro do outro.
+E então, no final de 2020,
+o destino deu um nó firme naquele fio.
+E tudo passou a fazer sentido.
+
+Desde então, nossas linhas seguem entrelaçadas,
+num amor leve, certo, e cheio de vida —
+vivendo o melhor que poderíamos viver.
+
+Porque o que é pra ser...
+o fio do destino sempre encontra um jeito de unir.`,
       image: `${import.meta.env.BASE_URL}images/timeline/meeting.jpg`,
       imageAlt: 'Como nos conhecemos',
       imageLeft: false
     },
-    {
-      id: 2,
-      title: 'O Pedido',
-      date: '01 de Janeiro, 2025',
-      location: 'Litoral Nordestino, Ceará',
-      story: `O momento mais mágico de nossas vidas chegou em um dia perfeito à beira-mar. Com o pôr do sol pintando o céu de dourado e rosa, o cenário não poderia ser mais perfeito para este momento especial.
-
-Com o coração acelerado e as palavras cuidadosamente preparadas, o pedido foi feito. As lágrimas de alegria, o sim apaixonado, e o abraço que pareceu durar uma eternidade - cada segundo daquele momento ficará para sempre gravado em nossos corações.
-
-Foi o início oficial da nossa jornada rumo ao altar, e mal podemos esperar para celebrar nosso amor com todos que amamos.`,
-      image: `${import.meta.env.BASE_URL}images/timeline/proposal.jpg`,
-      imageAlt: 'O pedido de casamento',
-      imageLeft: true
-    }
   ];
 
   return (

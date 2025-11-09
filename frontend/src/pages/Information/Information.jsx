@@ -38,15 +38,15 @@ export default function Information() {
                 <div className="flex items-start gap-3">
                   <CalendarIcon className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-primary mb-1">Data</h3>
-                    <p className="text-primary-light">Quarta-feira, 04 de Junho de 2026</p>
+                    <h3 className="font-couple-names font-semibold text-primary mb-1">Data</h3>
+                    <p className="text-primary-light">Quinta-feira, 04 de Junho de 2026</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <ClockIcon className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-primary mb-1">Horário</h3>
+                    <h3 className="font-couple-names font-semibold text-primary mb-1">Horário</h3>
                     <p className="text-primary-light">Cerimônia às 16:00</p>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ export default function Information() {
                 <div className="flex items-start gap-3">
                   <MapPinIcon className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-primary mb-1">Local</h3>
+                    <h3 className="font-couple-names font-semibold text-primary mb-1">Local</h3>
                     <p className="text-primary-light">
                       Lounge Conceito<br />
                       Praia de Iparana - Caucaia/CE
@@ -65,7 +65,7 @@ export default function Information() {
                 <div className="flex items-start gap-3">
                   <SparklesIcon className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-primary mb-1">Dress Code</h3>
+                    <h3 className="font-couple-names font-semibold text-primary mb-1">Dress Code</h3>
                     <p className="text-primary-light">Traje Esporte Fino</p>
                   </div>
                 </div>

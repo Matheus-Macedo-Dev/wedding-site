@@ -84,7 +84,7 @@ export default function StorySection({
             </h2>
             
             {date && (
-              <p className="text-lg text-secondary-dark font-medium mb-2">
+              <p className="text-lg text-secondary-dark font-couple-names font-medium mb-2">
                 {date}
               </p>
             )}

@@ -11,12 +11,13 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { name: 'Instagram', url: 'https://instagram.com' },
-    { name: 'Facebook', url: 'https://facebook.com' }
+    { name: 'Instagram - Alana', url: `https://instagram.com/${import.meta.env.VITE_INSTAGRAM_ALANA}` },
+    { name: 'Instagram - Matheus', url: `https://instagram.com/${import.meta.env.VITE_INSTAGRAM_MATHEUS}` },
+    { name: 'WhatsApp', url: `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}` }
   ];
 
   return (
-    <footer className="bg-primary text-text-light relative z-10">
+    <footer className="bg-primary text-text-light relative z-20">
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Brand Section */}

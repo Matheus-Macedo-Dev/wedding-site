@@ -70,7 +70,7 @@ export default function Hero() {
         </h1>
         
         <div className="w-16 h-px bg-white mb-4" />
-        <p className="monsieur-la-doulaise-regular text-3xl md:text-4xl leading-tight mb-12 md:mb-16">
+        <p className="monsieur-la-doulaise-regular text-4xl md:text-4xl leading-tight mb-12 md:mb-16">
           <span>um fio, um encontro,</span><br />
           <span>um para sempre.</span>
         </p>

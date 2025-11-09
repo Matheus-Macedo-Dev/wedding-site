@@ -48,7 +48,7 @@ export default function Gifts() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">
+          <h1 className="text-4xl md:text-5xl font-serif text-primary mb-4">
             Lista de Presentes
           </h1>
           <p className="text-lg text-text-muted max-w-2xl mx-auto">
@@ -73,7 +73,7 @@ export default function Gifts() {
             <p className="text-red-500 text-lg mb-4">{error}</p>
             <button
               onClick={fetchGifts}
-              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-couple-names"
             >
               Tentar Novamente
             </button>
