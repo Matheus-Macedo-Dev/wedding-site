@@ -28,8 +28,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Provide VITE_API_URL via repository Secret (or set as a repo Variable if preferred)
+      # Provide VITE environment variables via repository Secrets
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      VITE_WHATSAPP_NUMBER: ${{ secrets.VITE_WHATSAPP_NUMBER }}
+      VITE_INSTAGRAM_ALANA: ${{ secrets.VITE_INSTAGRAM_ALANA }}
+      VITE_INSTAGRAM_MATHEUS: ${{ secrets.VITE_INSTAGRAM_MATHEUS }}
     defaults:
       run:
         working-directory: ./frontend
