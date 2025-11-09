@@ -55,7 +55,7 @@ export const NAVIGATION_CARDS = [
     id: 'presentes',
     title: 'Lista de Presentes',
     description: 'Escolha um presente especial para nos ajudar a começar nossa vida juntos',
-    image: null, // Add: `${BASE_URL}images/navigation/presentes.jpg` when ready
+    image: `${BASE_URL}images/navigation/presentes.jpg`,
     gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', // Pink gradient
     path: '/presentes',
     external: false
@@ -64,7 +64,7 @@ export const NAVIGATION_CARDS = [
     id: 'rsvp',
     title: 'Confirme sua Presença',
     description: 'Confirme sua presença e nos ajude a planejar nosso dia especial',
-    image: null, // Add: `${BASE_URL}images/navigation/rsvp.jpg` when ready
+    image: `${BASE_URL}images/navigation/rsvp.jpg`,
     gradient: 'linear-gradient(135deg, #D4AF77 0%, #B8935E 100%)', // Gold accent gradient
     path: 'https://alanamatheus.online',
     external: true
@@ -73,7 +73,7 @@ export const NAVIGATION_CARDS = [
     id: 'informacoes',
     title: 'Informações',
     description: 'Todos os detalhes sobre data, local e programação do evento',
-    image: null, // Add: `${BASE_URL}images/navigation/informacoes.jpg` when ready
+    image: `${BASE_URL}images/navigation/informacoes.jpg`,
     gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // Purple gradient
     path: '/informacoes',
     external: false
@@ -82,7 +82,7 @@ export const NAVIGATION_CARDS = [
     id: 'album',
     title: 'Álbum de Fotos',
     description: 'Confira nossos momentos especiais e fotos do pre-wedding',
-    image: null, // Add: `${BASE_URL}images/navigation/album.jpg` when ready
+    image: `${BASE_URL}images/navigation/album.jpg`,
     gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', // Blue gradient
     path: '/album',
     external: false
@@ -91,7 +91,7 @@ export const NAVIGATION_CARDS = [
     id: 'historia',
     title: 'Nossa História',
     description: 'Conheça a história do nosso amor desde o primeiro encontro',
-    image: null, // Add: `${BASE_URL}images/navigation/historia.jpg` when ready
+    image: `${BASE_URL}images/navigation/historia.jpg`,
     gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', // Green gradient
     path: '/historia',
     external: false

@@ -19,7 +19,7 @@ function CountdownCard({ value, label }) {
       >
         {String(value).padStart(2, '0')}
       </motion.div>
-      <div className="text-sm md:text-base text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase tracking-wider">
+      <div className="font-couple-names text-sm md:text-base text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase tracking-wider">
         {label}
       </div>
     </motion.div>

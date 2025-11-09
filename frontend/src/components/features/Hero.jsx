@@ -59,7 +59,9 @@ export default function Hero() {
         background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.6) 100%)'
       }} />
 
-      {/* Content */}
+  {/* Content */}
+  {/* Load Libertinus Mono for the date */}
+  <style>{`@import url('https://fonts.googleapis.com/css2?family=Libertinus+Mono&display=swap');`}</style>
       <div className="relative h-full flex flex-col items-center justify-center text-center px-4 text-white pt-20 z-10">
         <h1 className="font-couple-names text-4xl md:text-6xl lg:text-7xl mb-4 animate-fade-in -mt-48 md:-mt-32">
           <span className="block md:inline">ALANA</span>
@@ -68,9 +70,12 @@ export default function Hero() {
         </h1>
         
         <div className="w-16 h-px bg-white mb-4" />
-        
-        <p className="text-xl md:text-2xl font-extralight">
-          04 de Junho de 2026
+        <p className="monsieur-la-doulaise-regular text-3xl md:text-4xl leading-tight mb-12 md:mb-16">
+          <span>um fio, um encontro,</span><br />
+          <span>um para sempre.</span>
+        </p>
+        <p className="font-couple-names text-l md:text-2xl font-extralight">
+          04 DE JUNHO DE 2026
         </p>
       </div>
     </section>
