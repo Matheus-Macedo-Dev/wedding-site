@@ -79,7 +79,13 @@ export default function PhotoGrid() {
                   src={photo.src}
                   alt={photo.alt}
                   effect="blur"
-                  className="w-full h-auto transform group-hover:scale-110 transition-transform duration-500"
+                  placeholderSrc={'/images/gifts/placeholder.svg'}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/gifts/placeholder.svg';
+                  }}
+                  wrapperClassName="w-full"
+                  className="w-full h-auto transform group-hover:scale-110 transition-transform duration-500 block"
                 />
                 
                 {/* Hover Overlay */}

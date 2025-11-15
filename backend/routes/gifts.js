@@ -57,7 +57,7 @@ router.post('/:id/checkout', async (req, res) => {
         {
           id: gift.id.toString(),
           title: gift.name,
-          description: gift.description,
+          description: gift.name,
           unit_price: parseFloat(gift.price),
           quantity: 1,
           currency_id: "BRL"

@@ -1,11 +1,19 @@
 import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
+import Select from 'react-select';
 import GiftCard from './GiftCard';
 
 export default function GiftList({ gifts, onPurchase, loading }) {
   const [filter, setFilter] = useState('all'); // all, available, purchased
-  const [sortBy, setSortBy] = useState('name-asc'); // name-asc, price-asc, price-desc
+  const [sortBy, setSortBy] = useState('none'); // none, price-asc, price-desc
+
+  const sortOptions = [
+    { value: 'price-asc', label: 'Menor Preço' },
+    { value: 'price-desc', label: 'Maior Preço' }
+  ];
+
+  const selectedSortOption = sortOptions.find(opt => opt.value === sortBy) || null;
 
   // Filter gifts
   const filteredGifts = useMemo(() => {
@@ -31,15 +39,13 @@ export default function GiftList({ gifts, onPurchase, loading }) {
     let sorted = [...filteredGifts];
 
     switch (sortBy) {
-      case 'name-asc':
-        sorted.sort((a, b) => a.name.localeCompare(b.name));
-        break;
       case 'price-asc':
         sorted.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
         sorted.sort((a, b) => b.price - a.price);
         break;
+      case 'none':
       default:
         break;
     }
@@ -87,19 +93,27 @@ export default function GiftList({ gifts, onPurchase, loading }) {
 
         {/* Sort Dropdown */}
         <div className="flex items-center gap-2">
-          <label htmlFor="sort" className="text-sm font-medium text-text-dark">
-            Ordenar:
-          </label>
-          <select
-            id="sort"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="name-asc">Nome (A-Z)</option>
-            <option value="price-asc">Preço (Menor)</option>
-            <option value="price-desc">Preço (Maior)</option>
-          </select>
+          <div className="w-52 md:w-56">
+            <Select
+              inputId="sort"
+              isClearable
+              value={selectedSortOption}
+              onChange={(option) => setSortBy(option ? option.value : 'none')}
+              options={sortOptions}
+              placeholder="Ordenar por..."
+              classNamePrefix="react-select"
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  borderRadius: '0.5rem',
+                  borderColor: '#E5E7EB',
+                  boxShadow: 'none',
+                  minHeight: '38px'
+                }),
+                menu: (provided) => ({ ...provided, zIndex: 60 })
+              }}
+            />
+          </div>
         </div>
       </div>
 

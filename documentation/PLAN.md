@@ -379,7 +379,7 @@ Features:
 
 Filtering:
 - Tabs: Todos | Disponíveis | Comprados
-- Sort dropdown: Preço (menor) | Preço (maior) | Nome A-Z
+- Sort dropdown: Padrão (DB) | Preço (menor) | Preço (maior)
 
 States:
 - Loading: skeleton cards

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import Card from '@/components/common/Card';
@@ -6,6 +7,13 @@ import Button from '@/components/common/Button';
 
 export default function GiftCard({ gift, onPurchase, loading }) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  // Local src state so we can swap to placeholder reliably on error
+  const [imgSrc, setImgSrc] = useState(gift.image || '/images/gifts/placeholder.svg');
+
+  useEffect(() => {
+    setImgSrc(gift.image || '/images/gifts/placeholder.svg');
+  }, [gift.image]);
 
   const handlePurchase = async () => {
     setIsProcessing(true);
@@ -28,11 +36,16 @@ export default function GiftCard({ gift, onPurchase, loading }) {
     >
       <Card className="h-full flex flex-col">
         {/* Image */}
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={gift.image}
+  <div className="relative w-full aspect-[4/3] overflow-hidden cursor-pointer" onClick={() => setIsLightboxOpen(true)}>
+          <LazyLoadImage
+            src={imgSrc}
             alt={gift.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain object-center block"
+            wrapperClassName="w-full h-full"
+            placeholderSrc={'/images/gifts/placeholder.svg'}
+            effect="blur"
+            onError={() => setImgSrc('/images/gifts/placeholder.svg')}
+            crossOrigin="anonymous"
           />
           {!gift.isAvailable && (
             <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
@@ -55,10 +68,7 @@ export default function GiftCard({ gift, onPurchase, loading }) {
             {gift.name}
           </h3>
 
-          {/* Description */}
-          <p className="text-sm text-text-muted mb-4 line-clamp-2 flex-grow">
-            {gift.description}
-          </p>
+          {/* Description removed: gifts no longer have a description field */}
 
           {/* Price and Availability */}
           <div className="flex items-center justify-between mb-4">
@@ -87,6 +97,21 @@ export default function GiftCard({ gift, onPurchase, loading }) {
           </Button>
         </div>
       </Card>
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          <div className="max-w-4xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+            <LazyLoadImage
+              src={imgSrc}
+              alt={gift.name}
+              effect="blur"
+              className="max-w-full max-h-[90vh] object-contain mx-auto"
+            />
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -95,7 +120,6 @@ GiftCard.propTypes = {
   gift: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     category: PropTypes.string,
