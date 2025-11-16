@@ -88,7 +88,7 @@ export default function Lightbox({ photo, photos, onClose, onNext, onPrevious })
           animate={{ scale: 1 }}
           exit={{ scale: 0.9 }}
           transition={{ duration: 0.3 }}
-          className="max-w-7xl max-h-[90vh] p-4"
+          className="p-4 lg:p-60"
           onClick={(e) => e.stopPropagation()}
         >
           <img
@@ -96,7 +96,7 @@ export default function Lightbox({ photo, photos, onClose, onNext, onPrevious })
             alt={photo.alt}
             loading="eager"
             decoding="async"
-            className="max-w-full max-h-full object-contain rounded-lg"
+            className="rounded-lg"
           />
           
           {/* Photo Info */}
@@ -130,19 +130,6 @@ export default function Lightbox({ photo, photos, onClose, onNext, onPrevious })
           <span className="text-white text-sm">
             {currentIndex + 1} / {photos.length}
           </span>
-
-          {/* Download Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDownload();
-            }}
-            className="text-white hover:text-accent transition-colors"
-            aria-label="Download photo"
-            title="Download"
-          >
-            <ArrowDownTrayIcon className="w-6 h-6" />
-          </button>
         </div>
       </motion.div>
     </AnimatePresence>

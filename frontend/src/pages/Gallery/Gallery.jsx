@@ -25,59 +25,248 @@ import Loader from '@/components/common/Loader';
 const GALLERY_PHOTOS = [
   {
     id: 1,
-    src: '/images/gallery/prewedding-1.jpg', // Replace with Google Drive URL or CDN
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Nosso ensaio na praia',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/KH0eEGP.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 2,
-    src: '/images/gallery/prewedding-2.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Um momento especial',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/KDMR3kI.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 3,
-    src: '/images/gallery/prewedding-3.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Golden hour',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/iawJmL3.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 4,
-    src: '/images/gallery/prewedding-4.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Nosso amor',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/QwGnV2z.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 5,
-    src: '/images/gallery/prewedding-5.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Tarde perfeita',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/LjU3KR6.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 6,
-    src: '/images/gallery/prewedding-6.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Pôr do sol',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/xVTOgn1.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 7,
-    src: '/images/gallery/prewedding-7.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Risadas e alegria',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/HmxBW8i.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   },
   {
     id: 8,
-    src: '/images/gallery/prewedding-8.jpg',
-    alt: 'Foto do ensaio pré-wedding',
-    caption: 'Momentos únicos',
-    date: 'Janeiro 2024'
+    src: 'https://i.imgur.com/B7NLESx.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 9,
+    src: 'https://i.imgur.com/rsrRW8Q.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 10,
+    src: 'https://i.imgur.com/LKY9ZbA.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 11,
+    src: 'https://i.imgur.com/UDBR7pS.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 12,
+    src: 'https://i.imgur.com/gkyPDAz.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 13,
+    src: 'https://i.imgur.com/Hz4wsoo.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 14,
+    src: 'https://i.imgur.com/NjjtF5c.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 15,
+    src: 'https://i.imgur.com/RquLWiF.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 16,
+    src: 'https://i.imgur.com/Qesoout.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 17,
+    src: 'https://i.imgur.com/DR2sY7Q.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 18,
+    src: 'https://i.imgur.com/2kbZI40.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 19,
+    src: 'https://i.imgur.com/SjykYvM.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 20,
+    src: 'https://i.imgur.com/LJ01ZPQ.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 21,
+    src: 'https://i.imgur.com/qEW1b04.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 22,
+    src: 'https://i.imgur.com/GVQw4X3.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 23,
+    src: 'https://i.imgur.com/cTaiPZh.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 24,
+    src: 'https://i.imgur.com/nnMoDC6.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 25,
+    src: 'https://i.imgur.com/EeXpwDn.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 26,
+    src: 'https://i.imgur.com/NDEnzYU.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 27,
+    src: 'https://i.imgur.com/fSYlpnQ.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 28,
+    src: 'https://i.imgur.com/l9rPWsY.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 29,
+    src: 'https://i.imgur.com/tmIgxV3.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 30,
+    src: 'https://i.imgur.com/YPZBu1y.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 31,
+    src: 'https://i.imgur.com/39LjGDs.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 32,
+    src: 'https://i.imgur.com/XS6yVct.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 33,
+    src: 'https://i.imgur.com/xL3sJN8.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 34,
+    src: 'https://i.imgur.com/kEXiRbj.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 35,
+    src: 'https://i.imgur.com/GJ7Mb6F.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 36,
+    src: 'https://i.imgur.com/35PA5P3.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 37,
+    src: 'https://i.imgur.com/3Q7sveI.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 38,
+    src: 'https://i.imgur.com/8JL3MfL.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 39,
+    src: 'https://i.imgur.com/MZ6KSd0.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 40,
+    src: 'https://i.imgur.com/fRHEr6a.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 41,
+    src: 'https://i.imgur.com/0bitlNj.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 42,
+    src: 'https://i.imgur.com/B5evwU0.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 43,
+    src: 'https://i.imgur.com/5UG1khg.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 44,
+    src: 'https://i.imgur.com/dOR8a6S.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 45,
+    src: 'https://i.imgur.com/c2AAZUT.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 46,
+    src: 'https://i.imgur.com/18NBe8a.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 47,
+    src: 'https://i.imgur.com/xle9BfY.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 48,
+    src: 'https://i.imgur.com/LCdWlsk.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
+  },
+  {
+    id: 49,
+    src: 'https://i.imgur.com/eVwGMBI.jpeg',
+    alt: 'Foto do ensaio pré-wedding'
   }
   // Add more photos as needed - supports unlimited photos
 ];
