@@ -138,9 +138,6 @@ export default function GiftList({ gifts, onPurchase, loading }) {
           {/* Special Gift Section */}
           {specialGift && (
             <div className="mb-8">
-              <h3 className="text-2xl font-serif font-light uppercase text-primary mb-4 text-center">
-                Presente em Destaque 🏆
-              </h3>
               <div className="flex justify-center mb-8">
                 <div className="inline-block max-w-md">
                   <GiftCard
