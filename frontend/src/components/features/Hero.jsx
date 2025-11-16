@@ -7,7 +7,7 @@ export default function Hero() {
   
   // Placeholder images - will be replaced with actual photos
   const slides = [
-    `${import.meta.env.BASE_URL}images/hero/slide1.jpg`,
+    `https://i.imgur.com/IEvaSuF.jpg`,
     `${import.meta.env.BASE_URL}images/hero/slide2.jpg`,
     `${import.meta.env.BASE_URL}images/hero/slide3.jpg`,
     `${import.meta.env.BASE_URL}images/hero/slide4.jpg`,
