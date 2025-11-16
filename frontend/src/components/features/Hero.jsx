@@ -49,6 +49,11 @@ export default function Hero() {
               alt={`Alana & Matheus - Photo ${index + 1}`}
               className="w-full h-full object-cover object-center"
               loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchPriority={index === 0 ? 'high' : 'low'}
+              importance={index === 0 ? 'high' : 'low'}
+              width={1920}
+              height={1080}
             />
           </div>
         ))}
