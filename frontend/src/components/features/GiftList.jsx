@@ -34,24 +34,30 @@ export default function GiftList({ gifts, onPurchase, loading }) {
     return filtered;
   }, [gifts, filter]);
 
-  // Sort gifts
-  const sortedGifts = useMemo(() => {
-    let sorted = [...filteredGifts];
+  // Sort gifts and separate special gift
+  const { specialGift, otherGifts } = useMemo(() => {
+    // Special gift is always shown, regardless of filter
+    const special = gifts.find(g => g.name === "Presenteou? Virou destaque no nosso site. 🏆");
+    
+    // For other gifts, use filtered excluding special
+    let others = [...filteredGifts];
+    others = others.filter(g => g.name !== "Presenteou? Virou destaque no nosso site. 🏆");
 
+    // Sort the remaining gifts
     switch (sortBy) {
       case 'price-asc':
-        sorted.sort((a, b) => a.price - b.price);
+        others.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
-        sorted.sort((a, b) => b.price - a.price);
+        others.sort((a, b) => b.price - a.price);
         break;
       case 'none':
       default:
         break;
     }
 
-    return sorted;
-  }, [filteredGifts, sortBy]);
+    return { specialGift: special, otherGifts: others };
+  }, [gifts, filteredGifts, sortBy]);
 
   return (
     <div>
@@ -118,7 +124,7 @@ export default function GiftList({ gifts, onPurchase, loading }) {
       </div>
 
       {/* Gift Grid */}
-      {sortedGifts.length === 0 ? (
+      {(!specialGift && otherGifts.length === 0) ? (
         <div className="text-center py-16">
           <p className="text-xl text-text-muted">
             {filter === 'available' 
@@ -128,21 +134,45 @@ export default function GiftList({ gifts, onPurchase, loading }) {
           </p>
         </div>
       ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {sortedGifts.map((gift) => (
-            <GiftCard
-              key={gift.id}
-              gift={gift}
-              onPurchase={onPurchase}
-              loading={loading}
-            />
-          ))}
-        </motion.div>
+        <>
+          {/* Special Gift Section */}
+          {specialGift && (
+            <div className="mb-8">
+              <h3 className="text-2xl font-serif font-light uppercase text-primary mb-4 text-center">
+                Presente em Destaque 🏆
+              </h3>
+              <div className="flex justify-center mb-8">
+                <div className="inline-block max-w-md">
+                  <GiftCard
+                    key={specialGift.id}
+                    gift={specialGift}
+                    onPurchase={onPurchase}
+                    loading={loading}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Other Gifts */}
+          {otherGifts.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {otherGifts.map((gift) => (
+                <GiftCard
+                  key={gift.id}
+                  gift={gift}
+                  onPurchase={onPurchase}
+                  loading={loading}
+                />
+              ))}
+            </motion.div>
+          )}
+        </>
       )}
     </div>
   );
