@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export function NavigationCard({ 
   id, 
@@ -18,14 +20,20 @@ export function NavigationCard({
       transition={{ duration: 0.3 }}
     >
       {/* Background Image or Gradient */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-        style={
-          image 
-            ? { backgroundImage: `url(${image})` }
-            : { background: gradient }
-        }
-      />
+      {image ? (
+        <LazyLoadImage
+          src={image}
+          alt={title}
+          effect="blur"
+          wrapperClassName="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+          style={{ background: gradient }}
+        />
+      )}
       
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

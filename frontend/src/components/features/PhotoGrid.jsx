@@ -137,6 +137,8 @@ export default function PhotoGrid() {
             <img
               src={selectedPhoto.src}
               alt={selectedPhoto.alt}
+              loading="eager"
+              decoding="async"
               className="max-w-full max-h-full object-contain"
             />
             <p className="text-white text-center mt-4">{selectedPhoto.date}</p>

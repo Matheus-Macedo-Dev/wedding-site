@@ -53,6 +53,8 @@ export default function Header() {
               <img 
                 src={useBlackLogo ? `${import.meta.env.BASE_URL}images/logo-black.png` : `${import.meta.env.BASE_URL}images/logo.png`}
                 alt="Alana & Matheus" 
+                loading="lazy"
+                decoding="async"
                 className={`h-16 md:h-14 w-auto transition-all duration-300 ${
                   useBlackLogo ? 'opacity-100' : 'drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'
                 }`}

@@ -27,6 +27,8 @@ function TimelineCard({ event, index, isFirst, isLast }) {
             <img
               src={event.image}
               alt={event.title}
+              loading="lazy"
+              decoding="async"
               className={`w-full h-full object-cover ${event.imagePosition || 'object-center'}`}
             />
           </div>

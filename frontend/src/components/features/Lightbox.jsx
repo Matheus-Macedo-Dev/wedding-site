@@ -94,6 +94,8 @@ export default function Lightbox({ photo, photos, onClose, onNext, onPrevious })
           <img
             src={photo.src}
             alt={photo.alt}
+            loading="eager"
+            decoding="async"
             className="max-w-full max-h-full object-contain rounded-lg"
           />
           

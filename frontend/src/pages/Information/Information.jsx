@@ -83,6 +83,8 @@ export default function Information() {
                 <img
                   src={`${import.meta.env.BASE_URL}images/timeline/venue.jpg`}
                   alt="Local do casamento - Lounge Conceito"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
