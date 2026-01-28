@@ -90,8 +90,7 @@ export default function GiftCard({ gift, onPurchase, loading }) {
             variant="primary"
             size="medium"
             className="w-full"
-            disabled={true}
-            // disabled={!gift.isAvailable || isProcessing || loading}
+            disabled={!gift.isAvailable || isProcessing || loading}
             onClick={handlePurchase}
           >
             {isProcessing ? 'Processando...' : 'Presentear'}
