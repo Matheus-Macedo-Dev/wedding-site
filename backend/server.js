@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import giftsRouter from './routes/gifts.js';
 import webhookRouter from './routes/webhook.js';
+import { db } from './services/database.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +34,6 @@ const additional = (process.env.ALLOWED_ORIGINS || '')
 const allowedOrigins = Array.from(new Set([...defaultOrigins, ...additional]));
 
 if (allowAll) {
-  console.warn('ALLOW_ALL_ORIGINS is enabled — CORS allows any origin. Disable in production.');
   app.use(cors({ origin: true }));
 } else {
   app.use(cors({
@@ -44,7 +44,6 @@ if (allowAll) {
       // Allow subpaths of GitHub Pages (endsWith .github.io) if present in allowedOrigins by wildcard
       const githubAllowed = allowedOrigins.some(a => a.includes('.github.io'));
       if (githubAllowed && origin.endsWith('.github.io')) return callback(null, true);
-      console.warn(`Blocked CORS origin: ${origin}`);
       return callback(new Error('Not allowed by CORS'));
     }
   }));
@@ -65,6 +64,42 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Manual cleanup trigger endpoint
+app.get('/api/admin/cleanup', async (req, res) => {
+  try {
+    const result = await db.cleanupAbandonedReservations();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to cleanup abandoned reservations' });
+  }
+});
+
+// Scheduled cleanup: Run every 10 minutes to clean abandoned reservations
+const setupCleanupSchedule = () => {
+  // Run cleanup every 10 minutes
+  setInterval(async () => {
+    try {
+      const result = await db.cleanupAbandonedReservations();
+      if (result.cleaned > 0) {
+        console.log('[Cleanup] Automated cleanup completed:', {
+          cleaned: result.cleaned,
+          timestamp: new Date().toISOString()
+        });
+      }
+    } catch (error) {
+      console.error('[Cleanup] Automated cleanup failed:', {
+        error: error.message,
+        stack: error.stack,
+        timestamp: new Date().toISOString()
+      });
+      // Cleanup will retry in 10 minutes
+    }
+  }, 10 * 60 * 1000); // 10 minutes
+};
+
+// Start cleanup scheduler on server start
+setupCleanupSchedule();
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
@@ -72,14 +107,14 @@ app.use((req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
+  console.error('[Server Error]:', err);
   res.status(500).json({ error: 'Internal server error' });
 });
 
 app.listen(PORT, () => {
-  console.log(`🎉 Wedding Registry API running on port ${PORT}`);
-  console.log(`📍 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`[Server] Running on port ${PORT}`);
+  console.log(`[Server] Environment: ${process.env.NODE_ENV || 'development'}`);
 }).on('error', (err) => {
-  console.error('❌ Server failed to start:', err);
+  console.error('[Server] Failed to start:', err);
   process.exit(1);
 });

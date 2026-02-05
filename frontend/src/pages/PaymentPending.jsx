@@ -1,8 +1,31 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ClockIcon } from '@heroicons/react/24/solid';
+import api from '@/services/api';
 
 export default function PaymentPending() {
+  const [searchParams] = useSearchParams();
+  const [isReleasing, setIsReleasing] = useState(false);
+  const [releaseStatus, setReleaseStatus] = useState(null);
+
+  const handleManualRelease = async () => {
+    const giftId = searchParams.get('giftId');
+    const preferenceId = searchParams.get('preference_id'); // Mercado Pago uses snake_case
+    
+    if (!giftId || !preferenceId) return;
+    
+    try {
+      setIsReleasing(true);
+      await api.post(`/gifts/${giftId}/release`, { preferenceId });
+      setReleaseStatus({ type: 'success', message: '✅ Reserva cancelada. O presente está disponível novamente!' });
+    } catch (error) {
+      setReleaseStatus({ type: 'error', message: '⚠️ Erro ao liberar a reserva. Tente novamente.' });
+    } finally {
+      setIsReleasing(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary-light px-4 pt-20">
       <motion.div
@@ -40,6 +63,21 @@ export default function PaymentPending() {
           </p>
         </div>
 
+        {/* Release Status Message */}
+        {releaseStatus && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`p-3 rounded-lg mb-6 text-sm ${
+              releaseStatus.type === 'success' 
+                ? 'bg-green-50 text-green-700' 
+                : 'bg-red-50 text-red-700'
+            }`}
+          >
+            {releaseStatus.message}
+          </motion.div>
+        )}
+
         {/* Action Buttons */}
         <div className="space-y-3">
           <Link
@@ -48,6 +86,18 @@ export default function PaymentPending() {
           >
             Voltar para Lista de Presentes
           </Link>
+
+          {/* Manual Cancel Reservation Button */}
+          {searchParams.get('giftId') && searchParams.get('preference_id') && (
+            <button
+              onClick={handleManualRelease}
+              disabled={isReleasing}
+              className="w-full px-6 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50"
+            >
+              {isReleasing ? 'Cancelando...' : 'Cancelar Minha Reserva'}
+            </button>
+          )}
+
           <Link
             to="/"
             className="block w-full px-6 py-3 bg-secondary text-text-dark font-medium rounded-lg hover:bg-secondary-dark transition-colors"

@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { getGifts, createCheckout } from '@/services/api';
+import { getGifts, createCheckout, uploadPhoto } from '@/services/api';
 import GiftList from '@/components/features/GiftList';
+import PhotoUploadModal from '@/components/features/PhotoUploadModal';
 import Loader, { Spinner } from '@/components/common/Loader';
 
 export default function Gifts() {
   const [gifts, setGifts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [photoModal, setPhotoModal] = useState({ isOpen: false, giftId: null });
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [pendingCheckout, setPendingCheckout] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 
   useEffect(() => {
     fetchGifts();
@@ -29,12 +34,75 @@ export default function Gifts() {
 
   const handlePurchase = async (giftId) => {
     try {
-      const response = await createCheckout(giftId);
-      // Redirect to Mercado Pago checkout
-      window.location.href = response.data.initPoint;
+      // Check if this is the special gift
+      const gift = gifts.find(g => g.id === giftId);
+      if (gift?.name === "Presenteou? Virou destaque no nosso site. 🏆") {
+        // Open photo upload modal instead of directly checking out
+        setPhotoModal({ isOpen: true, giftId });
+        setPendingCheckout(giftId);
+        return;
+      }
+
+      // Regular checkout for other gifts
+      await proceedToCheckout(giftId);
     } catch (err) {
-      console.error('Error creating checkout:', err);
-      alert('Não foi possível processar o pagamento. Tente novamente.');
+      // Handle version conflicts
+      if (err.response?.status === 409) {
+        alert('Este presente foi modificado por outro usuário. Atualizando a lista...');
+        await fetchGifts(); // Refresh the gift list
+      } else {
+        console.error('Error creating checkout:', err);
+        alert('Não foi possível processar o pagamento. Tente novamente.');
+      }
+    }
+  };
+
+  const proceedToCheckout = async (giftId, imageUrl = null) => {
+    // Get the gift to access its version
+    const gift = gifts.find(g => g.id === giftId);
+    if (!gift) {
+      throw new Error('Gift not found');
+    }
+
+    // For special gift with uploaded image, pass it through metadata
+    const response = await createCheckout(giftId, gift.version, imageUrl || uploadedImageUrl);
+    // Redirect to Mercado Pago checkout
+    window.location.href = response.data.initPoint;
+  };
+
+  const handlePhotoUpload = async (file) => {
+    try {
+      setUploadLoading(true);
+
+      // Create FormData with the file
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('giftId', pendingCheckout);
+
+      // Upload photo to backend
+      const response = await uploadPhoto(formData);
+      const data = response.data;
+
+      // Store the image URL for later use in checkout
+      setUploadedImageUrl(data.imageUrl);
+
+      // Close modal and proceed to checkout
+      setPhotoModal({ isOpen: false, giftId: null });
+      
+      // Proceed with regular checkout - pass image URL directly to avoid state update delay
+      await proceedToCheckout(pendingCheckout, data.imageUrl);
+    } catch (err) {
+      console.error('Error in photo upload or checkout:', err);
+      
+      // Handle version conflicts
+      if (err.response?.status === 409) {
+        alert('Este presente foi modificado por outro usuário. Atualizando a lista...');
+        await fetchGifts();
+      } else {
+        alert('Não foi possível processar. Tente novamente.');
+      }
+    } finally {
+      setUploadLoading(false);
     }
   };
 
@@ -101,6 +169,14 @@ export default function Gifts() {
             </p>
           </motion.div>
         )}
+
+        {/* Photo Upload Modal */}
+        <PhotoUploadModal
+          isOpen={photoModal.isOpen}
+          onClose={() => setPhotoModal({ isOpen: false, giftId: null })}
+          onUpload={handlePhotoUpload}
+          isLoading={uploadLoading}
+        />
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import Button from '@/components/common/Button';
 
 export default function GiftCard({ gift, onPurchase, loading }) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   // Local src state so we can swap to placeholder reliably on error
   const [imgSrc, setImgSrc] = useState(gift.image || '/images/gifts/placeholder.svg');
 
@@ -36,7 +35,7 @@ export default function GiftCard({ gift, onPurchase, loading }) {
     >
       <Card className="h-full flex flex-col">
         {/* Image */}
-  <div className="relative w-full aspect-[4/3] overflow-hidden cursor-pointer" onClick={() => setIsLightboxOpen(true)}>
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
           <LazyLoadImage
             src={imgSrc}
             alt={gift.name}
@@ -48,8 +47,8 @@ export default function GiftCard({ gift, onPurchase, loading }) {
             crossOrigin="anonymous"
           />
           {!gift.isAvailable && (
-            <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-              <span className="text-white text-lg font-bold">Esgotado</span>
+            <div className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+              Esgotado
             </div>
           )}
         </div>
@@ -97,21 +96,6 @@ export default function GiftCard({ gift, onPurchase, loading }) {
           </Button>
         </div>
       </Card>
-      {isLightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4"
-          onClick={() => setIsLightboxOpen(false)}
-        >
-          <div className="max-w-4xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
-            <LazyLoadImage
-              src={imgSrc}
-              alt={gift.name}
-              effect="blur"
-              className="max-w-full max-h-[90vh] object-contain mx-auto"
-            />
-          </div>
-        </div>
-      )}
     </motion.div>
   );
 }

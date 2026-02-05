@@ -14,7 +14,12 @@ const api = axios.create({
 // Gift endpoints
 export const getGifts = () => api.get('/gifts');
 export const getGift = (id) => api.get(`/gifts/${id}`);
-export const createCheckout = (giftId) => api.post(`/gifts/${giftId}/checkout`);
+export const createCheckout = (giftId, version, uploadedImageUrl) => 
+  api.post(`/gifts/${giftId}/checkout`, { version, uploadedImageUrl });
+export const uploadPhoto = (formData) => 
+  api.post('/gifts/upload-photo', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
 
 // Health check
 export const healthCheck = () => api.get('/health');
