@@ -56,19 +56,8 @@ export default function PaymentError() {
             to="/presentes"
             className="block w-full px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors"
           >
-            Tentar Novamente
+            Voltar para Lista de Presentes
           </Link>
-          
-          {/* Manual Cancel Reservation Button */}
-          {searchParams.get('giftId') && searchParams.get('preference_id') && (
-            <button
-              onClick={handleManualRelease}
-              disabled={isReleasing}
-              className="w-full px-6 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50"
-            >
-              {isReleasing ? 'Cancelando...' : 'Cancelar Minha Reserva'}
-            </button>
-          )}
 
           <Link
             to="/"
