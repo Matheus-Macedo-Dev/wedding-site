@@ -94,13 +94,12 @@ router.post('/:id/checkout', async (req, res) => {
         }
       ],
       back_urls: {
-        success: `${frontendUrl}/obrigado?giftId=${gift.id}`,
-        failure: `${frontendUrl}/erro?giftId=${gift.id}`,
-        pending: `${frontendUrl}/pendente?giftId=${gift.id}`
+        success: `${frontendUrl}/obrigado`,
+        failure: `${frontendUrl}/erro`,
+        pending: `${frontendUrl}/pendente`
       },
       auto_return: "approved",
       notification_url: `${process.env.BACKEND_URL}/api/webhook/mercadopago`,
-      statement_descriptor: "Casamento Alana&Matheus",
       metadata: {
         gift_id: gift.id,
         // Store uploaded image URL in metadata so webhook can use it
