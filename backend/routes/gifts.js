@@ -94,9 +94,9 @@ router.post('/:id/checkout', async (req, res) => {
         }
       ],
       back_urls: {
-        success: `${frontendUrl}/obrigado`,
-        failure: `${frontendUrl}/erro`,
-        pending: `${frontendUrl}/pendente`
+        "success": `https://alanamatheus.site/obrigado`,
+        "failure": `https://alanamatheus.site/erro`,
+        "pending": `https://alanamatheus.site/pendente`
       },
       auto_return: "approved",
       notification_url: `${process.env.BACKEND_URL}/api/webhook/mercadopago`,
