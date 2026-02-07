@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import giftsRouter from './routes/gifts.js';
 import webhookRouter from './routes/webhook.js';
-import { db } from './services/database.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -64,41 +63,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Manual cleanup trigger endpoint
-app.get('/api/admin/cleanup', async (req, res) => {
-  try {
-    const result = await db.cleanupAbandonedReservations();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to cleanup abandoned reservations' });
-  }
-});
-
-// Scheduled cleanup: Run every 10 minutes to clean abandoned reservations
-const setupCleanupSchedule = () => {
-  // Run cleanup every 10 minutes
-  setInterval(async () => {
-    try {
-      const result = await db.cleanupAbandonedReservations();
-      if (result.cleaned > 0) {
-        console.log('[Cleanup] Automated cleanup completed:', {
-          cleaned: result.cleaned,
-          timestamp: new Date().toISOString()
-        });
-      }
-    } catch (error) {
-      console.error('[Cleanup] Automated cleanup failed:', {
-        error: error.message,
-        stack: error.stack,
-        timestamp: new Date().toISOString()
-      });
-      // Cleanup will retry in 10 minutes
-    }
-  }, 10 * 60 * 1000); // 10 minutes
-};
-
-// Start cleanup scheduler on server start
-setupCleanupSchedule();
 
 // 404 handler
 app.use((req, res) => {

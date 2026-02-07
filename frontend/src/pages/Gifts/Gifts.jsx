@@ -46,9 +46,9 @@ export default function Gifts() {
       // Regular checkout for other gifts
       await proceedToCheckout(giftId);
     } catch (err) {
-      // Handle version conflicts
-      if (err.response?.status === 409) {
-        alert('Este presente foi modificado por outro usuário. Atualizando a lista...');
+      // Handle gift unavailable
+      if (err.response?.status === 400 && err.response?.data?.error === 'GIFT_UNAVAILABLE') {
+        alert('Este presente acabou de ser comprado por outra pessoa. Atualizando a lista...');
         await fetchGifts(); // Refresh the gift list
       } else {
         console.error('Error creating checkout:', err);
@@ -58,14 +58,9 @@ export default function Gifts() {
   };
 
   const proceedToCheckout = async (giftId, imageUrl = null) => {
-    // Get the gift to access its version
-    const gift = gifts.find(g => g.id === giftId);
-    if (!gift) {
-      throw new Error('Gift not found');
-    }
-
     // For special gift with uploaded image, pass it through metadata
-    const response = await createCheckout(giftId, gift.version, imageUrl || uploadedImageUrl);
+    const response = await createCheckout(giftId, imageUrl || uploadedImageUrl);
+    
     // Redirect to Mercado Pago checkout
     window.location.href = response.data.initPoint;
   };
@@ -94,9 +89,9 @@ export default function Gifts() {
     } catch (err) {
       console.error('Error in photo upload or checkout:', err);
       
-      // Handle version conflicts
-      if (err.response?.status === 409) {
-        alert('Este presente foi modificado por outro usuário. Atualizando a lista...');
+      // Handle gift unavailable
+      if (err.response?.status === 400 && err.response?.data?.error === 'GIFT_UNAVAILABLE') {
+        alert('Este presente acabou de ser comprado. Atualizando a lista...');
         await fetchGifts();
       } else {
         alert('Não foi possível processar. Tente novamente.');

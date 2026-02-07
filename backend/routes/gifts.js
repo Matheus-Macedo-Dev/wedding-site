@@ -59,9 +59,9 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/checkout', async (req, res) => {
   try {
     const giftId = parseInt(req.params.id);
-    const { uploadedImageUrl, version } = req.body; // Get version from request body
+    const { uploadedImageUrl } = req.body;
     
-    console.log('[Checkout] Request:', { giftId, version, uploadedImageUrl });
+    console.log('[Checkout] Request:', { giftId, uploadedImageUrl });
     
     const gift = await db.getGift(giftId);
 
@@ -69,23 +69,11 @@ router.post('/:id/checkout', async (req, res) => {
       return res.status(404).json({ error: 'Gift not found' });
     }
 
-    // Reserve the gift (locks 1 unit immediately) with version check
-    const reserveResult = await db.reserveGift(giftId, version);
-    
-    console.log('[Checkout] Reserve result:', reserveResult);
-    
-    if (!reserveResult.success) {
-      // Special handling for version conflicts
-      if (reserveResult.error === 'VERSION_CONFLICT') {
-        return res.status(409).json({ 
-          error: reserveResult.error,
-          message: reserveResult.message 
-        });
-      }
-      
+    // Check if gift is still available
+    if (gift.purchased >= gift.quantity) {
       return res.status(400).json({ 
-        error: reserveResult.error,
-        message: reserveResult.message 
+        error: 'GIFT_UNAVAILABLE',
+        message: 'Este presente já foi comprado. Por favor, escolha outro.'
       });
     }
     
@@ -110,13 +98,9 @@ router.post('/:id/checkout', async (req, res) => {
         failure: `${frontendUrl}/erro?giftId=${gift.id}`,
         pending: `${frontendUrl}/pendente?giftId=${gift.id}`
       },
-      // Mercado Pago rejects auto_return with localhost URLs in test mode
-      ...(!isLocalhost ? { auto_return: "approved" } : {}),
+      auto_return: "approved",
       notification_url: `${process.env.BACKEND_URL}/api/webhook/mercadopago`,
-      payment_methods: {
-        installments: 3, // Maximum number of installments
-        default_installments: 1 // Default to 1x (à vista)
-      },
+      statement_descriptor: "Casamento Alana&Matheus",
       metadata: {
         gift_id: gift.id,
         // Store uploaded image URL in metadata so webhook can use it
@@ -135,8 +119,15 @@ router.post('/:id/checkout', async (req, res) => {
       }
     );
 
-    // Save preference ID to database with the reservation
+    // Save preference ID for reference
     await db.updateGiftPreference(gift.id, response.data.id);
+
+    console.log('✅ [Checkout] Preference created successfully:', {
+      preferenceId: response.data.id,
+      giftId: gift.id,
+      giftName: gift.name,
+      webhookUrl: `${process.env.BACKEND_URL}/api/webhook/mercadopago`
+    });
 
     res.json({
       preferenceId: response.data.id,
@@ -146,48 +137,6 @@ router.post('/:id/checkout', async (req, res) => {
   } catch (error) {
     console.error('[Checkout] Error:', error);
     res.status(500).json({ error: 'Failed to create checkout', message: error.message });
-  }
-});
-
-// POST release reservation (when user cancels/abandons checkout)
-router.post('/:id/release', async (req, res) => {
-  try {
-    const giftId = parseInt(req.params.id);
-    const { preferenceId, version } = req.body; // Get version from request body
-
-    if (!preferenceId) {
-      return res.status(400).json({ error: 'Preference ID required' });
-    }
-
-    const result = await db.releaseReservation(giftId, preferenceId, version);
-
-    if (result.success) {
-      res.json({ success: true, message: result.message });
-    } else {
-      // Special handling for version conflicts
-      if (result.error === 'VERSION_CONFLICT') {
-        return res.status(409).json({ error: result.error, message: result.message });
-      }
-      
-      res.status(400).json({ error: result.message });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to release reservation' });
-  }
-});
-
-// GET cleanup abandoned reservations (manual trigger or scheduled)
-router.get('/cleanup/abandoned', async (req, res) => {
-  try {
-    const result = await db.cleanupAbandonedReservations();
-    
-    if (result.success) {
-      res.json(result);
-    } else {
-      res.status(400).json({ error: result.message });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to cleanup abandoned reservations' });
   }
 });
 

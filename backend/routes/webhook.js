@@ -7,10 +7,19 @@ const MP_ACCESS_TOKEN = process.env.MERCADO_PAGO_ACCESS_TOKEN;
 
 // Mercado Pago Webhook
 router.post('/mercadopago', async (req, res) => {
+  console.log('\n🔔 [Webhook] Received notification:', {
+    body: req.body,
+    query: req.query,
+    headers: req.headers,
+    timestamp: new Date().toISOString()
+  });
+  
   try {
     // Mercado Pago sends topic (not type) and can use body OR query params
     const topic = req.body.topic || req.query.topic;
     const dataId = req.body.data?.id || req.query['data.id'] || req.query.id;
+    
+    console.log('📬 [Webhook] Parsed:', { topic, dataId });
 
     // Process both payment and merchant_order notifications
     if ((topic === 'payment' || topic === 'merchant_order') && dataId) {
@@ -47,46 +56,86 @@ router.post('/mercadopago', async (req, res) => {
         );
 
         const payment = paymentResponse.data;
+        
+        console.log('💳 [Webhook] Payment details:', {
+          id: payment.id,
+          status: payment.status,
+          amount: payment.transaction_amount,
+          giftId: payment.metadata?.gift_id,
+          payer: payment.payer?.email
+        });
 
         // Only process approved payments
         if (payment.status === 'approved') {
+          console.log('✅ [Webhook] Payment approved, processing...');
           const giftId = parseInt(payment.metadata?.gift_id);
           const paymentIdStr = paymentId.toString();
           
           // Check if payment already processed (idempotency)
           const existingPurchase = await db.getPurchaseByPaymentId(paymentIdStr);
           if (existingPurchase) {
+            console.log('⚠️ [Webhook] Payment already processed, skipping');
             return res.status(200).send('OK');
           }
+          
+          console.log('🎁 [Webhook] Processing new purchase for gift:', giftId);
           
           const gift = await db.getGift(giftId);
           
           if (!gift) {
+            console.log('❌ [Webhook] Gift not found:', giftId);
             return res.status(200).send('OK');
           }
           
-          // Confirm purchase (move from reserved → purchased)
+          // Check if gift is still available
+          if (gift.purchased >= gift.quantity) {
+            console.log('⚠️ [Webhook] Gift already sold out, payment needs refund:', giftId);
+            // In production, you would trigger a refund here
+            return res.status(200).send('OK');
+          }
+          
+          // Process purchase directly (increment purchased count)
           try {
-            const result = await db.confirmPurchase(giftId, {
-              paymentId: paymentIdStr,
+            // Create purchase record FIRST (will fail if duplicate due to unique constraint)
+            await db.createPurchase({
+              giftId,
               giftName: gift.name,
+              paymentId: paymentIdStr,
               amount: payment.transaction_amount,
               buyerEmail: payment.payer.email,
               buyerName: payment.payer.first_name ? 
                 `${payment.payer.first_name} ${payment.payer.last_name || ''}`.trim() : 
-                'Guest'
+                'Guest',
+              status: 'approved'
             });
             
-            if (result.success) {
-              // If this was the special gift with an uploaded image, update it now
-              const uploadedImageUrl = payment.metadata?.uploaded_image_url;
-              
-              if (uploadedImageUrl) {
-                await db.updateGiftImage(giftId, uploadedImageUrl);
-              }
+            // Only increment if purchase record was created successfully
+            await db.incrementPurchased(giftId);
+            
+            console.log('🎉 [Webhook] Purchase completed successfully!', {
+              giftId,
+              paymentId: paymentIdStr,
+              amount: payment.transaction_amount
+            });
+            
+            // If this was the special gift with an uploaded image, update it now
+            const uploadedImageUrl = payment.metadata?.uploaded_image_url;
+            
+            if (uploadedImageUrl) {
+              console.log('📸 [Webhook] Updating gift image:', uploadedImageUrl);
+              await db.updateGiftImage(giftId, uploadedImageUrl);
             }
           } catch (error) {
-            console.error('[Webhook] Failed to confirm purchase:', {
+            // Check if this is a duplicate payment error (idempotency)
+            if (error.message && error.message.includes('duplicate key')) {
+              console.log('⚠️ [Webhook] Duplicate payment detected, ignoring:', {
+                paymentId: paymentIdStr,
+                giftId
+              });
+              return res.status(200).send('OK');
+            }
+            
+            console.error('[Webhook] Failed to process purchase:', {
               paymentId: paymentIdStr,
               giftId,
               giftName: gift.name,
@@ -113,6 +162,7 @@ router.post('/mercadopago', async (req, res) => {
     }
 
     // Always respond with 200 to acknowledge receipt
+    console.log('✓ [Webhook] Responding with 200 OK');
     res.status(200).send('OK');
   } catch (error) {
     console.error('[Webhook] Error processing webhook:', {

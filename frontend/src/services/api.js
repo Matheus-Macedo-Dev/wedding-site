@@ -14,8 +14,8 @@ const api = axios.create({
 // Gift endpoints
 export const getGifts = () => api.get('/gifts');
 export const getGift = (id) => api.get(`/gifts/${id}`);
-export const createCheckout = (giftId, version, uploadedImageUrl) => 
-  api.post(`/gifts/${giftId}/checkout`, { version, uploadedImageUrl });
+export const createCheckout = (giftId, uploadedImageUrl) => 
+  api.post(`/gifts/${giftId}/checkout`, { uploadedImageUrl });
 export const uploadPhoto = (formData) => 
   api.post('/gifts/upload-photo', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
@@ -24,7 +24,5 @@ export const uploadPhoto = (formData) =>
 // Health check
 export const healthCheck = () => api.get('/health');
 
-// Note: RSVP functionality is handled by separate Vue.js application
-// No RSVP API calls needed in this React app
 
 export default api;
