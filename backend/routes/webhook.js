@@ -65,8 +65,20 @@ router.post('/mercadopago', async (req, res) => {
           payer: payment.payer?.email
         });
 
+        // Log explicit payment status
+        if (payment.status === 'approved') {
+          console.log(`✅ [Webhook] Payment APPROVED: paymentId=${payment.id}`);
+        } else if (payment.status === 'rejected') {
+          console.log(`❌ [Webhook] Payment REJECTED: paymentId=${payment.id}`);
+        } else if (payment.status === 'pending') {
+          console.log(`⏳ [Webhook] Payment PENDING: paymentId=${payment.id}`);
+        } else {
+          console.log(`[Webhook] Payment status '${payment.status}': paymentId=${payment.id}`);
+        }
+
         // Only process approved payments
         if (payment.status === 'approved') {
+          // Already logged above
           console.log('✅ [Webhook] Payment approved, processing...');
           const giftId = parseInt(payment.metadata?.gift_id);
           const paymentIdStr = paymentId.toString();
@@ -163,13 +175,21 @@ router.post('/mercadopago', async (req, res) => {
 
     // Always respond with 200 to acknowledge receipt
     console.log('✓ [Webhook] Responding with 200 OK');
+    // Log paymentId if available in query/body
+    const paymentIdLog = req.body.data?.id || req.query['data.id'] || req.query.id;
+    if (paymentIdLog) {
+      console.log(`[Webhook] Final response for paymentId=${paymentIdLog}`);
+    }
     res.status(200).send('OK');
   } catch (error) {
+    // Log paymentId if available in query/body
+    const paymentIdLog = req.body.data?.id || req.query['data.id'] || req.query.id;
     console.error('[Webhook] Error processing webhook:', {
       error: error.message,
       stack: error.stack,
       body: req.body,
       query: req.query,
+      paymentId: paymentIdLog,
       timestamp: new Date().toISOString()
     });
     // Still respond with 200 to prevent retries

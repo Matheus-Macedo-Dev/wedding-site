@@ -80,7 +80,7 @@ router.post('/:id/checkout', async (req, res) => {
     // Get frontend URL for redirects
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     const isLocalhost = frontendUrl.includes('localhost');
-    
+    console.log(process.env.BACKEND_URL);
     // Create Mercado Pago preference
     const preference = {
       items: [
@@ -100,11 +100,6 @@ router.post('/:id/checkout', async (req, res) => {
       },
       auto_return: "approved",
       notification_url: `${process.env.BACKEND_URL}/api/webhook/mercadopago`,
-      metadata: {
-        gift_id: gift.id,
-        // Store uploaded image URL in metadata so webhook can use it
-        ...(uploadedImageUrl && { uploaded_image_url: uploadedImageUrl })
-      }
     };
     
     const response = await axios.post(
