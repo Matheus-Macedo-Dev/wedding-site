@@ -80,8 +80,20 @@ router.post('/mercadopago', async (req, res) => {
         if (payment.status === 'approved') {
           // Already logged above
           console.log('✅ [Webhook] Payment approved, processing...');
-          const giftId = parseInt(payment.metadata?.gift_id);
+          const giftIdRaw =
+            payment.metadata?.gift_id ??
+            payment.external_reference ??
+            payment.additional_info?.items?.[0]?.id;
+          const giftId = parseInt(giftIdRaw);
           const paymentIdStr = paymentId.toString();
+
+          if (Number.isNaN(giftId)) {
+            console.log('⚠️ [Webhook] giftId missing or invalid, skipping:', {
+              paymentId: paymentIdStr,
+              giftIdRaw
+            });
+            return res.status(200).send('OK');
+          }
           
           // Check if payment already processed (idempotency)
           const existingPurchase = await db.getPurchaseByPaymentId(paymentIdStr);

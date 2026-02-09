@@ -99,6 +99,7 @@ router.post('/:id/checkout', async (req, res) => {
         "pending": `https://alanamatheus.site/pendente`
       },
       auto_return: "approved",
+      external_reference: gift.id.toString(),
       notification_url: `${process.env.BACKEND_URL}/api/webhook/mercadopago`,
     };
     
