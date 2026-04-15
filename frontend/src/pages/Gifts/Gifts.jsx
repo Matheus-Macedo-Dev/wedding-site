@@ -8,6 +8,7 @@ import Loader, { Spinner } from '@/components/common/Loader';
 export default function Gifts() {
   const [gifts, setGifts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [warming, setWarming] = useState(false);
   const [error, setError] = useState(null);
   const [photoModal, setPhotoModal] = useState({ isOpen: false, giftId: null });
   const [uploadLoading, setUploadLoading] = useState(false);
@@ -17,6 +18,15 @@ export default function Gifts() {
   useEffect(() => {
     fetchGifts();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      setWarming(false);
+      return;
+    }
+    const timer = setTimeout(() => setWarming(true), 4000);
+    return () => clearTimeout(timer);
+  }, [loading]);
 
   const fetchGifts = async () => {
     try {
@@ -121,8 +131,13 @@ export default function Gifts() {
 
         {/* Loading State */}
         {loading && (
-          <div className="flex justify-center py-16">
+          <div className="flex flex-col items-center py-16 gap-4">
             <Spinner size="large" color="primary" />
+            {warming && (
+              <p className="text-text-muted text-sm animate-pulse">
+                Estamos preparando os presentes para você, aguarde um instante...
+              </p>
+            )}
           </div>
         )}
 
